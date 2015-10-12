@@ -1,0 +1,10 @@
+exportPattern("^[[:alpha:]]+")
+importFrom("gplots", heatmap.2)
+importFrom("vegan",diversity,specnumber)
+importFrom("doParallel",registerDoParallel)
+importFrom("foreach",foreach,"%dopar%")
+importFrom("parallel", detectCores)
+importFrom("grDevices", "colorRampPalette", "dev.off", "pdf")
+importFrom("graphics", "abline", "axis", "barplot", "boxplot",
+           "legend", "mtext", "par", "plot", "points", "text", "title")
+importFrom("utils", "adist", "read.table")
