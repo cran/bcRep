@@ -19,11 +19,12 @@ clones.shared<-function(clones.tab=NULL,identity=0.85,useJ=TRUE,dispD=TRUE,dispC
   clones.uniV<-clones.uniV[grep(substr(clones.tab$V_gene[1],1,4),clones.uniV)]
   clones.uniV.gene<-unique(apply(data.frame(clones.uniV),1,function(x){strsplit(x,split="[*]")[[1]][1]}))
   
-  registerDoParallel(cores=nrCores)
-  
+  cl<-makeCluster(nrCores)
+  registerDoParallel(cl)
+
   sharedclone.temp<-vector()
-  clonelist<-foreach(i=1:length(clones.uniV.gene), .export="sharedclone.temp") %dopar%{
-    cat(paste(i,"/",length(clones.uniV.gene),"\n"))
+  clonelist<-foreach(i=1:length(clones.uniV.gene)) %dopar%{
+    #cat(paste(i,"/",length(clones.uniV.gene),"\n"))
     newCDR3length=NULL
     if(length(grep(paste(clones.uniV.gene[i],"$",sep=""),clones.tab$V_gene))>1 && length(unique(clones.tab[,1][grep(clones.uniV.gene[i],clones.tab$V_gene)]))>1){
       sameV<-grep(paste(clones.uniV.gene[i],"$",sep=""),clones.tab$V_gene)
@@ -306,6 +307,7 @@ clones.shared<-function(clones.tab=NULL,identity=0.85,useJ=TRUE,dispD=TRUE,dispC
   }
   
   sharedclone<-do.call(rbind.data.frame, clonelist)
+  stopCluster(cl)
   
   if(length(sharedclone)>0){
     if(length(which(as.numeric(sharedclone[,1])==1))>0){

@@ -8,7 +8,7 @@ Gene usage of clones
 This function gives information about the gene usage of clones. Results can returned as relative or absolute values and be visualized as a barplot, using \code{plotGeneUsage}.
 }
 \usage{
-geneUsage(geneUsage = NULL, level = c("subgroup", "gene", "allele"), 
+geneUsage(genes = NULL, level = c("subgroup", "gene", "allele"), 
      functionality = NULL, junctionFr = NULL, 
      abundance=c("relative","absolute"), ...)
 
@@ -17,7 +17,7 @@ plotGeneUsage(geneUsage.tab=NULL,plotFunctionality=FALSE,plotJunctionFr=FALSE,
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-\item{geneUsage}{
+\item{genes}{
 	Vector containing gene information (IMGT nomenclature; see Details)
 }
 \item{level}{
@@ -80,9 +80,9 @@ Julia Bischof
 }
 \examples{
 data(clones.ind)
-geneUsage(geneUsage = clones.ind$V_gene, level = "subgroup", 
+geneUsage(genes = clones.ind$V_gene, level = "subgroup", 
      functionality = clones.ind$Functionality_all_sequences)
-\dontrun{plotGeneUsage(geneUsage = clones.ind$V_gene, 
-     functionality = TRUE)}
+\dontrun{plotGeneUsage(geneUsage.tab = clones.ind$V_gene, 
+     plotFunctionality = TRUE)}
 }
 

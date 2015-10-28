@@ -15,6 +15,6 @@ sequences.functionality<-function(data=NULL, relativeValues=TRUE, ...){
                          (length(data)-length(grep("^productive",data))-length(grep("^unproductive",data))))
   }
   colnames(func.tab)<-c("productive", "unproductive","unknown")
-  return(func.tab)
+  return(data.frame(func.tab, check.names=F, row.names=NULL))
 }
 

@@ -28,7 +28,7 @@ clones.shared.summary<-function(shared.tab=NULL, clones.tab=NULL){
     
     clones.nr.new<-vector() # number clones per individual minus shared clones
     for(i in 1:length(ind)){
-      clones.nr.new<-c(clones.nr.new,length(which(clones.tab==ind[i]))-sum(as.numeric(nrshclones[grep(ind[i],nrshclones[,2]),2])))
+      clones.nr.new<-c(clones.nr.new,length(which(clones.tab==ind[i]))-sum(as.numeric(nrshclones[grep(ind[i],nrshclones[,1]),2])))
     }
     nrshclones<-rbind(cbind(paste("only in ",as.character(ind),sep=""),clones.nr.new),nrshclones)
     colnames(nrshclones)<-c("group",'number_clones')

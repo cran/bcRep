@@ -5,7 +5,7 @@
 Shared clones between individuals
 }
 \description{
-\code{clones.shared} compares clones of different individuals to find shared clones with identical or similar CDR3 sequences. Criteria for same/similar clones are 1) same CDR3 length, 2) CDR3 identity of a given treshold, 3) same V gene, 4) same J gene (optional).
+\code{clones.shared} compares clones of different individuals to find shared clones with identical or similar CDR3 sequences. Criteria for same/similar clones are 1) same CDR3 length, 2) CDR3 identity of a given treshold, 3) same V gene, 4) same J gene (optional). Parallel processing is possible.
 
 \code{clones.shared.summary} provides information about the number of shared clones between two or more individuals.
 }

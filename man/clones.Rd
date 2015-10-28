@@ -5,7 +5,7 @@
 Grouping sequences into clones
 }
 \description{
-This function uses IMGT/HighV-QUEST output files to define B cell clones. Therefore criteria using amino acid CDR3 sequences, V genes and J genes (optional) are used. A treshold for CDR3 identity can be given.
+This function uses IMGT/HighV-QUEST output files to define B cell clones. Therefore criteria using amino acid CDR3 sequences, V genes and J genes (optional) are used. A treshold for CDR3 identity can be given. Parallel processing is possible.
 }
 \usage{
 clones(aaseqtab = NULL, summarytab = NULL, ntseqtab = NULL, identity = 0.85, 

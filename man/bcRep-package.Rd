@@ -8,7 +8,7 @@ Advanced Analysis of B Cell Receptor Repertoire Data
 }
 \description{
 This package helps to analyze IMGT/HighV-QUEST output, in more detail. It functions well with B cells, but can also be used for T cell data, in some cases.
-Using this package you can read IMGT/HighV-QUEST output files and study sequences and clones. In special their functionality, junction frames, gene usage and mutations. Functions to analyze clones out of the IMGT/HighV-QUEST output, but also to compare shared clones, are provided.
+Using this package you can read IMGT/HighV-QUEST output files and study sequences and clones. In special their functionality, junction frames, gene usage and mutations. Functions to analyze clones out of the IMGT/HighV-QUEST output, but also to compare sequences and clones, are provided.
 }
 \details{
 \tabular{ll}{
@@ -40,28 +40,40 @@ Lou Jost: Entropy and diversity; OIKOS 113:2 (2006)
 \keyword{ package }
 
 \examples{
+\dontrun{
 data(summarytab)
 data(aaseqtab)
+data(aaseqtab2)
 data(mutationtab)
 data(clones.ind)
 data(clones.allind)
 
-## Read IMGT/HighV-QUEST data
-\dontrun{tab<-readIMGT("PathTo/file.txt",filterNoResults=TRUE)}
+## Combine IMGT/HighV-QUEST folders and read data
+combineIMGT(folders = c("pathTo/IMGT1a", "pathTo/IMGT1b", "pathTo/IMGT1c"), 
+name = "NewProject)
+tab<-readIMGT("PathTo/file.txt",filterNoResults=TRUE)
+
 
 ## Get information about functionality and filter for functional sequences
 functionality<-sequences.functionality(data = summarytab$Functionality)
 ProductiveSequences<-sequences.getProductives(summarytab)
 
 ## Gene usage
-Vsubgroup.usage<-geneUsage(geneUsage = clones.ind$V_gene, 
+Vsubgroup.usage<-geneUsage(genes = clones.ind$V_gene, 
      functionality = clones.ind$Functionality_all_sequences, level = "subgroup", 
      abundance="relative")
 
+Vgenes.comp<-compare.geneUsage(gene.list = list(aaseqtab$V_GENE_and_allele, 
+     aaseqtab2$V_GENE_and_allele), level = "subgroup", abundance = "relative", 
+     names = c("IndA", "IndB"), nrCores = 1)
+plotCompareGeneUsage(comp.tab = Vgenes.comp, color = c("gray97", "darkblue"), PDF = "Example")
+
+
 ## Gene/gene combinations
-\dontrun{VDcomb.tab<-sequences.geneComb(family1 = summarytab$V_GENE_and_allele, 
+VDcomb.tab<-sequences.geneComb(family1 = summarytab$V_GENE_and_allele, 
      family2 = summarytab$D_GENE_and_allele, level = "subgroup", abundance = "relative")
-plotGeneComb(geneComb.tab=VDcomb.tab, color="red", withNA=FALSE,PDF="test")}
+plotGeneComb(geneComb.tab=VDcomb.tab, color="red", withNA=FALSE,PDF="test")
+
 
 ## Mutation analysis
 mutation.V<-sequences.mutation(mutationtab = mutationtab, summarytab = summarytab, 
@@ -69,12 +81,14 @@ mutation.V<-sequences.mutation(mutationtab = mutationtab, summarytab = summaryta
 mutation.CDR1<-sequences.mutation(mutationtab = mutationtab, sequence = "CDR1", 
      functionality = TRUE, junctionFr = TRUE)
 
-## Define clones and CDR3 length analysis of clones
-\dontrun{clones.tab<-clones(aaseqtab=aaseqtab,summarytab=summarytab, identity=0.85, useJ=TRUE, 
+## Defining, Filtering and Plotting Clone features
+clones.tab<-clones(aaseqtab=aaseqtab,summarytab=summarytab, identity=0.85, useJ=TRUE, 
      dispCDR3aa=TRUE, dispFunctionality.ratio=TRUE, dispFunctionality.list=TRUE)
 plotClonesCDR3Length(CDR3Length = clones.ind$CDR3_length_AA, 
      functionality = clones.ind$Functionality_all_sequences,  
-     color="gray",abundance="relative", PDF="test")}
+     color="gray",abundance="relative", PDF="test")
+clones.func<-clones.filterFunctionality(clones.filterFunctionality(clones.tab = clones.ind, 
+     filter = "productive")   
 
 ## Find shared clones between individuals
 sharedclones<-clones.shared(clones.tab = clones.allind, identity = 0.85, useJ = TRUE, 
@@ -83,6 +97,14 @@ sharedclones.summary<-clones.shared.summary(shared.tab = sharedclones)
 
 ## True diversity
 trueDiv<-trueDiversity(sequences = aaseqtab$CDR3_IMGT, order = 1)
-\dontrun{plotTrueDiversity(trueDiversity.tab=trueDiv,color="red",PDF="test")}
+plotTrueDiversity(trueDiversity.tab=trueDiv,color="red",PDF="test")
 
+trueDiv.comp<-compare.trueDversity(sequence.list = list(aaseqtab$CDR3_IMGT, 
+     aaseqtab2$CDR3_IMGT), names = c("IndA", "IndB"), order = 1, nrCores = 1)
+plotCompareTrueDiversity(comp.tab = trueDiv.comp, PDF = "Example")
+
+
+## Gini index
+gini<-gini<-clones.giniIndex(clone.size=clones.ind$total_number_of_sequences)
+}
 }

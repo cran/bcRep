@@ -15,7 +15,7 @@ This function calculates the proportions or absolute quantities of the combinati
 \usage{
 sequences.geneComb(family1 = NULL, family2 = NULL, 
      level = c("subgroup","gene","allele"), abundance = c("relative", "absolute"),
-     ...)
+     nrCores=1)
      
 plotGeneComb(geneComb.tab=NULL,color=c("gray97","darkblue"),withNA=TRUE, title=NULL,
      PDF=NULL,...)
@@ -34,6 +34,9 @@ plotGeneComb(geneComb.tab=NULL,color=c("gray97","darkblue"),withNA=TRUE, title=N
   \item{abundance}{
      How values shall be returned: relative or absolute abundance.
 }
+  \item{nrCores}{
+     Number of cores used for parallel processing (default: 1)
+}
   \item{geneComb.tab}{
      Output data frame from \code{sequences.genecomb()}
 }
@@ -49,7 +52,7 @@ plotGeneComb(geneComb.tab=NULL,color=c("gray97","darkblue"),withNA=TRUE, title=N
 \item{PDF}{
      PDF project name (see Details)
 }
- \item{...}{
+\item{...}{
 
 }
 }

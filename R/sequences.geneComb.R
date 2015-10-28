@@ -1,7 +1,10 @@
 ## Julia Bischof
 ## 10-09-2015
 
-sequences.geneComb<-function(family1=NULL,family2=NULL,level=c("subgroup", "gene", "allele"),abundance=c("relative", "absolute"),...){
+library(doParallel)
+library(parallel)
+
+sequences.geneComb<-function(family1=NULL,family2=NULL,level=c("subgroup", "gene", "allele"),abundance=c("relative", "absolute"),nrCores=1){
   if(length(family1)==0){
     stop("--> Vector of gene family 1 is missing")
   }
@@ -14,6 +17,14 @@ sequences.geneComb<-function(family1=NULL,family2=NULL,level=c("subgroup", "gene
   if(length(abundance)!=1 || !(abundance %in% c("relative", "absolute"))){
     abundance<-"relative"
   }
+   if(as.numeric(nrCores)>as.numeric(detectCores())){
+    stop(paste("--> nrCores is higher than available number of cores (only ",as.numeric(detectCores())," cores available)",sep=""))
+  }
+  
+  cl<-makeCluster(nrCores)
+  registerDoParallel(cl)
+
+    
   if(length(grep(" ",(family1[1])))==0){
     familyname1<-substr(family1[1],1,4)
   }else{
@@ -45,13 +56,31 @@ sequences.geneComb<-function(family1=NULL,family2=NULL,level=c("subgroup", "gene
     comb.tab<-vector()
     list1.new<-c(list1,"")
     list2.new<-c(list2,"")
-    for(i in 1:length(list1.new)){
-      comb.tab<-rbind(comb.tab,apply(data.frame(list2.new),1,function(x){length(intersect(grep(x,family2),grep(list1.new[i], family1)))}))
+    i<-NULL
+  if(level=="allele"){
+    temp<-vector()
+    comb.tab<-foreach(i=1:length(list1.new)) %dopar% {
+      temp<-c(list1.new[i],unlist(apply(data.frame(list2.new),1,function(x){length(intersect(grep(gsub("[*]","_",x),gsub("[*]","_",family2),perl=T),grep(gsub("[*]","_",list1.new[i]), gsub("[*]","_",family1),perl=T)))})))
     }
-    colnames(comb.tab)<-c(list2,"NA")
-    rownames(comb.tab)<-c(list1,"NA")
-    if(abundance=='relative'){
-      return(comb.tab/sum(comb.tab))
+  }else{
+    temp<-vector()
+    comb.tab<-foreach(i=1:length(list1.new)) %dopar% {
+      temp<-c(list1.new[i],unlist(apply(data.frame(list2.new),1,function(x){length(intersect(grep(x,family2),grep(list1.new[i], family1)))})))
+    }
+  }
+    
+    comb.tab<-do.call(rbind.data.frame, comb.tab)
+    newnames<-as.character(comb.tab[,1])
+    comb.tab<-comb.tab[,-1]
+    comb.tab<-apply(comb.tab,1,function(x){as.numeric(x)})
+  
+  colnames(comb.tab)<-c(as.character(newnames)[1:(length(newnames)-1)],"NA")
+  rownames(comb.tab)<-c(as.character(list2),"NA")
+    
+    stopCluster(cl)
+    
+  if(abundance=='relative'){
+      return(comb.tab/sum(comb.tab,na.rm=T))
     }
     return(comb.tab)
 }

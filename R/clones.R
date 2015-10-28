@@ -2,7 +2,6 @@
 ## 10-09-2015
 
 library(doParallel)
-
 library(parallel)
 
 clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, useJ=TRUE,dispD=FALSE, 
@@ -25,7 +24,8 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
     stop(paste("--> nrCores is higher than available number of cores (only ",as.numeric(detectCores())," cores available)",sep=""))
   }
   
-  registerDoParallel(cores=nrCores)
+  cl<-makeCluster(nrCores)
+  registerDoParallel(cl)
   
   V<-unlist(unique(apply(data.frame(aaseqtab$V_GENE_and_allele),1,function(x){strsplit(x,split=" |,|;|[*]")[[1]]})))
   V<-unique(V[grep("V",V)])
@@ -34,7 +34,7 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
   
   tempout<-vector()
   i<-NULL
-  clonelist<-foreach(i=1:length(V), .export = "tempout") %dopar% {
+  clonelist<-foreach(i=1:length(V)) %dopar% {
     if(useJ==T){ ### useJ=T
       for(j in J){
         aaseqtab.sub<-aaseqtab[intersect(grep(paste(V[i],"[!/*]",sep=""),aaseqtab$V_GENE_and_allele,perl=T),grep(paste(j,"[!/*]",sep=""),aaseqtab$J_GENE_and_allele,perl=T)),c('CDR3_IMGT','V_GENE_and_allele','J_GENE_and_allele','D_GENE_and_allele','Functionality','Sequence_ID')]
@@ -228,6 +228,8 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
   
   clonRel<-do.call(rbind.data.frame, clonelist)
   
+  stopCluster(cl)
+  
   if(length(clonRel)>0){
     colnames(clonRel)<-c("unique_CDR3_sequences_AA",
                          "CDR3_length_AA",
@@ -256,6 +258,6 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
     }
   } 
   return(data.frame(clonRel,check.names=F,stringsAsFactors = F))
+  
 }
-
 

@@ -34,7 +34,7 @@ plotClonesCDR3Length<-function(CDR3Length=NULL,functionality=NULL, junctionFr=NU
     if(length(PDF)>0){
       pdf(file = paste(PDF,"_CDR3-length.pdf",sep=""),width = if(ncol(tab.bar)*0.7<7){7}else{ncol(tab.bar)*0.7},height = 7,pointsize = if(ncol(tab.bar)*0.5<16){16}else{ncol(tab.bar)*0.5})
     }
-      barplot(tab.bar,col=color,xlab="CDR3 length",ylab=if(abundance=="relative"){"Percentage"}else{"Quantity"},main=title,
+      barplot(tab.bar,col=color,xlab="CDR3 length",ylab=if(abundance=="relative"){"Percentage"}else{"Quantity"},main=title, cex.names = 0.8,
               ylim=c(0,max(tab.bar)+(max(tab.bar)/5)))
   
   
@@ -63,7 +63,7 @@ plotClonesCDR3Length<-function(CDR3Length=NULL,functionality=NULL, junctionFr=NU
         pdf(file = paste(PDF,"_CDR3-length_vs_functionality.pdf",sep=""),width = if(ncol(tab.bar)*0.7<7){7}else{ncol(tab.bar)*0.7},height = 7,pointsize = if(ncol(tab.bar)*0.5<16){16}else{ncol(tab.bar)*0.5})
       }
       barplot(tab.bar,col=color,xlab="CDR3 length",ylim=if(abundance=="absolute"){c(0,max(tab.bar)+(max(tab.bar)/5))}else{c(0,160)},main=title,
-              ylab=if(abundance=="relative"){""}else{"Quantity"},axes=if(abundance=="relative"){F}else{T})
+              ylab=if(abundance=="relative"){""}else{"Quantity"},axes=if(abundance=="relative"){F}else{T}, cex.names = 0.8)
       if(abundance=="relative"){
         axis(2,at=seq(0,100,25),seq(0,100,25))
         mtext(side = 2,at = 50,line = 2.5,text = "Percentage")
@@ -98,7 +98,7 @@ plotClonesCDR3Length<-function(CDR3Length=NULL,functionality=NULL, junctionFr=NU
           pdf(file = paste(PDF,"_CDR3-length_vs_junction_frame.pdf",sep=""),width = if(ncol(tab.bar)*0.7<7){7}else{ncol(tab.bar)*0.7},height = 7,pointsize = if(ncol(tab.bar)*0.5<16){16}else{ncol(tab.bar)*0.5})
         }
       barplot(tab.bar,col=color,xlab="CDR3 length",ylim=if(abundance=="absolute"){c(0,max(tab.bar)+(max(tab.bar)/5))}else{c(0,160)},main=title,
-              ylab=if(abundance=="relative"){""}else{"Quantity"},axes=if(abundance=="relative"){F}else{T})
+              ylab=if(abundance=="relative"){""}else{"Quantity"},axes=if(abundance=="relative"){F}else{T}, cex.names = 0.8)
       if(abundance=="relative"){
         axis(2,at=seq(0,100,25),seq(0,100,25))
         mtext(side = 2,at = 50,line = 2.5,text = "Percentage")

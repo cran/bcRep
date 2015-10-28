@@ -39,7 +39,7 @@ clones.CDR3Length<-function(CDR3Length=NULL,functionality=NULL, junctionFr=NULL,
     if(length(functionality)>0 && length(CDR3Length)==length(functionality)){
       CDR3Length.new<-vector()
       for(i in 1:length(CDR3Length)){
-        CDR3Length.new<-c(CDR3Length.new,rep(CDR3Length[i],length(grep(",|[.]|;|[|]|_|-|/",functionality[i]))+1))
+        CDR3Length.new<-c(CDR3Length.new,rep(CDR3Length[i],length(grep("prod|unknown|results",functionality[i]))))
       }
       tab.bar<-vector()
       for(i in c("^productive","^unproductive","unknown|No results")){
@@ -63,7 +63,7 @@ clones.CDR3Length<-function(CDR3Length=NULL,functionality=NULL, junctionFr=NULL,
     if(length(junctionFr)>0 && length(CDR3Length)==length(junctionFr)){
       CDR3Length.new<-vector()
       for(i in 1:length(CDR3Length)){
-        CDR3Length.new<-c(CDR3Length.new,rep(CDR3Length[i],length(grep(",|[.]|;|[|]|_|/",junctionFr[i]))+1))
+        CDR3Length.new<-c(CDR3Length.new,rep(CDR3Length[i],length(grep("frame|null",junctionFr[i]))))
       }
       tab.bar<-vector()
       for(i in c("in-frame","out-of-frame","null")){

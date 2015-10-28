@@ -17,7 +17,7 @@ a list containing amino acid distribution and analyzed number of sequences per l
 aaDistribution(sequences = NULL, numberSeq = FALSE)
 
 plotAADistribution(aaDistribution.tab=NULL, plotSeqN=FALSE, 
-     PDF=NULL, ...)
+     colors=NULL, PDF=NULL, ...)
 }
 
 \arguments{
@@ -32,6 +32,9 @@ plotAADistribution(aaDistribution.tab=NULL, plotSeqN=FALSE,
 }
 \item{plotSeqN}{
 	TRUE: Number of sequences for each length will be plotted (see Details; default: FALSE).
+}
+\item{colors}{
+     Colors to be used for figure containing number of sequences (default: rainbow)
 }
 \item{PDF}{
      PDF project name (see Details)
@@ -50,7 +53,7 @@ The \code{PDF} character string should be only the project name (without ".pdf")
 }
 \value{
 Output is a list containing
-\item{Amino_acid_distribution}{list contains data frames of amino acid distributions for each length}
+\item{Amino_acid_distribution}{list contains data frames of amino acid distributions (including stop codons "*") for each length}
 \item{Number_of_sequences_per_length}{data frame contains the number of sequences for each length, used for analysis (optional)}
 }
 \author{

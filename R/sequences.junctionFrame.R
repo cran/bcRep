@@ -15,7 +15,7 @@ sequences.junctionFrame<-function(data=NULL, relativeValues=TRUE, ...){
                              (length(data)-length(grep("^in-frame",data))-length(grep("^out-of-frame",data))))
   }
   colnames(junction.tab)<-c("in-frame", "out-of-frame","unknown")
-  return(junction.tab)
+  return(data.frame(junction.tab, check.names=F, row.names=NULL))
 }
 
 

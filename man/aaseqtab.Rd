@@ -18,7 +18,7 @@ Data frame represents an output from IMGT/HighV-QUEST, file 5_AA-sequences(...).
     \item{\code{J_GENE_and_allele}}{a character vector}
     \item{\code{D_GENE_and_allele}}{a character vector}
     \item{\code{V_D_J_REGION}}{a character vector}
-    \item{\code{V_J_REGION}}{a logical vector}
+    \item{\code{V_J_REGION}}{a character vector}
     \item{\code{V_REGION}}{a character vector}
     \item{\code{FR1_IMGT}}{a character vector}
     \item{\code{CDR1_IMGT}}{a character vector}

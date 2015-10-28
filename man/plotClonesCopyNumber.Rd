@@ -8,13 +8,16 @@ Copy number of clones
 This Function plots the copy number distribution of clones.
 }
 \usage{
-plotClonesCopyNumber(copyNumber = NULL, color = "gray", title = NULL, 
-     PDF=NULL, ...)
+plotClonesCopyNumber(copyNumber = NULL, withOutliers = TRUE, color = "gray", 
+     title = NULL, PDF=NULL, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{copyNumber}{
      Vector of copy numbers of clones
+}
+  \item{withOutliers}{
+     Shall outliers (anything bigger than 75% quantile) be included? (default: TRUE)
 }
 \item{color}{
 	color used for plots (default: gray)

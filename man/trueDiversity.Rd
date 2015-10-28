@@ -76,7 +76,7 @@ Julia Bischof
 \examples{
 data(aaseqtab)
 trueDiv<-trueDiversity(sequences = aaseqtab$CDR3_IMGT, order = 1)
-\dontrun{plotTrueDiversity(trueDiversity.tab=trueDiv,color="red")}
+\dontrun{plotTrueDiversity(trueDiversity.tab=trueDiv,color="red", PDF="Example")}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
