@@ -37,15 +37,15 @@ sequences.mutation(mutationtab = NULL, summarytab = NULL,
 }
 }
 \details{
-IMGT/HighV-QUEST output 7_V-REGION-mutation-and-AA-change-table(...).txt (\code{mutationtab}) is required as input. 1_Summarytab(...).txt (\code{summarytab}) is optional; if specified, junction frame information and in special for V sequences "V-REGION identity [nt]" can be returned. Mutations of V region, as well as FR1, 2, 3 and CDR1, 2 can be analyzed.
-\code{rsRatio=T} returns the ratio of replacement and silent mutations per sequence. Sequences, where there is either no silent or no replacement mutation, will have a ratio of 0.
+IMGT/HighV-QUEST output file 7_V-REGION-mutation-and-AA-change-table(...).txt (\code{mutationtab}) is required as input. 1_Summarytab(...).txt (\code{summarytab}) is optional; if specified, junction frame information and in special for V sequences "V-REGION identity [nt]" can be returned. Mutations of V region, as well as FR1, 2, 3 and CDR1, 2 can be analyzed.
+\code{rsRatio=T} returns the ratio of replacement and silent mutations per sequence. Sequences without silent or replacement mutation, will have a ratio of 0.
 }
 \value{
 Output is a list containing
   \item{Number_of_mutations}{data frame with number of total mutations, replacement and silent mutations (optional: V sequences V-REGION identity [nt], R/S ratio)}
   \item{Functionality}{Proportions of mutations and no mutations in productive and unproductive sequences (optional)}
   \item{Junction_frame}{Proportions of mutations and no mutations in in-frame and out-of-frame sequences (optional)}
-    \item{RS_ratio}{Ratio of replacement and silent mutations (optional)}
+  \item{RS_ratio}{Ratio of replacement and silent mutations (optional)}
 }
 \references{
 IMGT/HighV-QUEST V-REGION mutation and AA change table: \url{http://www.imgt.org/IMGT_vquest/share/textes/imgtvquest.html#mut-table}

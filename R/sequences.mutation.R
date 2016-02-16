@@ -25,6 +25,7 @@ sequences.mutation<-function(mutationtab=NULL,summarytab=NULL,sequence=c("V", "F
       mut.tab <- cbind(mut.tab,mut.tab[,2]/mut.tab[,3])
       mut.tab[which(mut.tab[,4] %in% c("Inf","NaN")),4]<-0
       colnames(mut.tab)<-c("number_mutations","number_replacement","number_silent","RS_ratio")
+      rownames(mut.tab)<-mutationtab$Sequence_ID
     }
   }
   else if(length(summarytab) != 0 && sequence=="V"){
@@ -34,6 +35,7 @@ sequences.mutation<-function(mutationtab=NULL,summarytab=NULL,sequence=c("V", "F
       mut.tab <- cbind(mut.tab,mut.tab[,3]/mut.tab[,4])
       mut.tab[which(mut.tab[,5] %in% c("Inf","NaN")),5]<-0
       colnames(mut.tab)<-c("V_REGION_identity_nt","number_mutations","number_replacement","number_silent","RS_ratio")
+      rownames(mut.tab)<-mutationtab$Sequence_ID
     }
   }
   if(functionality==F && junctionFr == F){
@@ -65,7 +67,7 @@ sequences.mutation<-function(mutationtab=NULL,summarytab=NULL,sequence=c("V", "F
     nrmut.other.mut<-length(which(mut.tab[,which(colnames(mut.tab)=="number_mutations")]>0))-nrmut.inframe.mut-nrmut.outframe.mut
     nrmut.other.nomut<-length(which(mut.tab[,which(colnames(mut.tab)=="number_mutations")]==0))-nrmut.inframe.nomut-nrmut.outframe.nomut
     jf.tab<-t(data.frame(nrmut.inframe.mut,nrmut.outframe.mut,nrmut.other.mut,nrmut.inframe.nomut,nrmut.outframe.nomut,nrmut.other.nomut))
-    rownames(jf.tab)<-c("mutation_in_in-frame_sequences","mutations_in_out-of-frame_sequences","mutations_in_sequences_with_unknown_JUNCTION_frame","no_mutation_in_in-frame_sequences","no_mutations_in_out-of-frame_sequences","no_mutations_in_sequences_with_unknown_JUNCTION_frame")
+    rownames(jf.tab)<-c("mutation_in_in-frame_sequences","mutations_in_out-of-frame_sequences","mutations_in_sequences_with_unknown_junction_frame","no_mutation_in_in-frame_sequences","no_mutations_in_out-of-frame_sequences","no_mutations_in_sequences_with_unknown_junction_frame")
     jf.tab[,1]<-jf.tab[,1]/nrow(mutationtab)
     colnames(jf.tab)<-"proportion"
     out.list<-c(out.list,list(data.frame(jf.tab,check.names=F)))

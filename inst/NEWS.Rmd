@@ -1,0 +1,59 @@
+---
+title: "bcRep news"
+author: "Julia Bischof <Julia.Bischof@uksh.de>"
+date: '`r Sys.Date()`'
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: 4
+  html_document:
+    theme: united
+    toc: yes
+  word_document: default
+---
+
+## Changes in version 1.3 (2016-02-15)
+
+### BUG FIXES
+
+     * clones.shared(): reduced computation time and memory; copy number of CDR3 sequences 
+        changed
+     * sequences.mutation(): added sequence ID's
+    
+
+### NEW FEATURES AND FUNCTIONS
+      
+     * added NEWS
+     * sequences.distance() added (distance/dissimilarity measurements on sequence data)
+     * geneUsage.distance() added (distance/dissimilarity measurements on gene usage data)
+     * dist.PCoA() and plotDistPCoA() added (Principal coordinate analysis on distance data
+        and visualization)
+
+
+
+## Changes in version 1.2.2 (2015-10-28)
+
+### BUG FIXES
+
+      * plotClonesCopyNumber(): added parameter to plot with and without outliers 
+        (clone sizes > 75\% quantile)
+      * geneUsage(): Combination of gene usage and functionality didn't work for alleles before
+      * sequences.geneComb(): added parallel processing option
+      
+
+### NEW FEATURES AND FUNCTIONS
+      
+     * added Vignette
+     * combineIMGT(): combines IMGT output files from different folders
+     * clones.giniIndex(): calculates Gini Index of clones
+     * clones.filterSize(): filters clones for their size (number, percentage)
+     * clones.filterFuntionality(): filters clones for their funtionality
+     * clones.filterJunctionFrame(): filters clones for their junction frame usage
+     * compare.aaDistribution(), plotCompareAADistribution(): compare amino acid distribution 
+        of different samples
+     * compare.trueDiversity(), plotCompareTrueDiversity(): compare richness and diversity of 
+        different samples
+     * compare.geneUsage(), plotCompareGeneUsage(): compare gene usage of different samples 
+        (subgroup, gene, allele)
+     
+## Version 1.0 (2015-10-09)

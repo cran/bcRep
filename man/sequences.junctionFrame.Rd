@@ -13,7 +13,7 @@ sequences.junctionFrame(data = NULL, relativeValues=TRUE, ...)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
-     Vector containing junction frame information, f.e. taken from IMGT/HighV-QUEST output 1_Summary(...).txt
+     Vector containing junction frame information, e.g. taken from IMGT/HighV-QUEST output 1_Summary(...).txt
 }
   \item{relativeValues}{
      Shall relative or absolute values be returned? (default: TRUE)
@@ -23,7 +23,7 @@ sequences.junctionFrame(data = NULL, relativeValues=TRUE, ...)
 }
 }
 \details{
-Junction: coding region of the V-J or V-D-J junction from 2nd CYS (position 104) to J-PHE or J-TRP (position 118) in an IG or TR V-DOMAIN (http://www.imgt.org/ligmdb/label)
+Junction: coding region of the V-J or V-D-J junction from 2nd CYS (position 104) to J-PHE or J-TRP (position 118) in an IG or TR V-DOMAIN (\url{http://www.imgt.org/ligmdb/label})
 }
 \value{
 Output is a data frame including proportions of in-frame and out-of-frame sequences, as well as proportion of sequences without any information about junction frames.

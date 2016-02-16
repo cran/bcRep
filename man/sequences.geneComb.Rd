@@ -3,10 +3,10 @@
 \alias{plotGeneComb}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Gene combinations gene families
+Gene/gene combinations
 }
 \description{
-This function calculates the proportions or absolute quantities of the combination of two gene families. Analysis can be done for subgroup, gene and allele level.
+This function calculates the abundance of two paired gene families. Analysis can be done for subgroup, gene and allele level (see Details).
 
 \code{sequences.geneComb} returns a data frame containing all possible combinations of gene families 1 (rows) and 2 (columns) in relative or absolute values.
 
@@ -17,8 +17,8 @@ sequences.geneComb(family1 = NULL, family2 = NULL,
      level = c("subgroup","gene","allele"), abundance = c("relative", "absolute"),
      nrCores=1)
      
-plotGeneComb(geneComb.tab=NULL,color=c("gray97","darkblue"),withNA=TRUE, title=NULL,
-     PDF=NULL,...)
+plotGeneComb(geneComb.tab=NULL,color=c("gray97","darkblue"),withNA=TRUE, 
+     title=NULL, PDF=NULL,...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -57,11 +57,11 @@ plotGeneComb(geneComb.tab=NULL,color=c("gray97","darkblue"),withNA=TRUE, title=N
 }
 }
 \details{
-Input are vectors of IMGT/HighV-QUEST output 1_Summary(...).txt file. Columns like "V-GENE and allele", "D-GENE and allele" or "J-GENE and allele" can be used as input, but need to have the same order! Levels can be \code{subgroup} (f.e. IGHV1), \code{genes} (f.e. IGHV1-1) or \code{alleles} (f.e. IGHV1-1*2).
+Input are vectors of IMGT/HighV-QUEST output file 1_Summary(...).txt. Columns like "V-GENE and allele", "D-GENE and allele" or "J-GENE and allele" can be used as input, but need to have the same order! Levels can be \code{subgroup} (e.g. IGHV1), \code{genes} (e.g. IGHV1-1) or \code{alleles} (e.g. IGHV1-1*2).
 
 The \code{PDF} character string should be only the project name (without ".pdf"). 
 
-A figure called "PDF"_"family1"-"family2"-combinatione.pdf will be saved to your working direktory.
+A figure called "PDF"_"family1"-"family2"-combinations.pdf will be saved to the working directory.
 }
 \value{
 Output is a data frame containing gene/gene combinations, with family 1 as rows and family 2 as columns. Either in absolute or relative abundances.

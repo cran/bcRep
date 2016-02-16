@@ -35,7 +35,7 @@ plotClonesCopyNumber(copyNumber = NULL, withOutliers = TRUE, color = "gray",
 \details{
 The \code{PDF} character string should be only the project name (without ".pdf"). 
 
-A figure called "PDF"_Clone_copy_number.pdf will be saved to your working directory.
+A figure called "PDF"_Clone_copy_number.pdf will be saved to the working directory.
 }
 \author{
 Julia Bischof

@@ -44,12 +44,12 @@ plotAADistribution(aaDistribution.tab=NULL, plotSeqN=FALSE,
 }
 }
 \details{
-The vector containing sequences will be divided in sequences of the same length and then amino acid distribution for each position is done.
+The vector containing sequences will be divided in sequences of the same length and then amino acid distribution for each position is analyzed.
 
-If \code{numberSeq = T}, the number of sequences used for the analysis of sequences of the same length will be returned, as well. This information is also required for \code{plotAADistribution(..., 
-plotSeqN = T)}. In the plot sequence numbers equal to 0 are not plotted; smallest number is 1.
+If \code{numberSeq = T}, the number of sequences used for the analysis of sequences of the same length will be returned, as well. This information is also required for \code{plotAADistribution(...,    
+plotSeqN = T)}. Sequence numbers equal to 0 are not plotted; the smallest number is 1.
 
-The \code{PDF} character string should be only the project name (without ".pdf"). If \code{plotAADistr = T} a figure called "PDF"_Amino-acid-distribution.pdf will be saved to your working directory. If \code{plotSeqN = T} a figure called "PDF"_Number-of-sequences.pdf will be saved.
+The \code{PDF} character string should be only the project name (without ".pdf"). If \code{plotAADistr = T} a figure called "PDF"_Amino-acid-distribution.pdf will be saved to the working directory. If \code{plotSeqN = T} a figure called "PDF"_Number-of-sequences.pdf will be saved, as well.
 }
 \value{
 Output is a list containing

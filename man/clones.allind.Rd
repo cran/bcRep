@@ -5,13 +5,13 @@
 B cell clones of 8 individuals
 }
 \description{
-This data frame represents the combined ouput of the function clones() for 8 individuals (300 clones per individual).
+This data frame represents the combined ouput of the function clones() for 7 individuals (in total 2948 clones).
 }
 \usage{data("clones.allind")}
 \format{
-  A data frame with 2400 observations on the following 15 variables.
+  A data frame with 5286 observations on the following 15 variables.
   \describe{
-    \item{\code{individuals}}{a factor with 8 levels}
+    \item{\code{samples}}{a factor with 8 levels}
     \item{\code{unique_CDR3_sequences_AA}}{a character vector}
     \item{\code{CDR3_length_AA}}{a numeric vector}
     \item{\code{number_of_unique_sequences}}{a numeric vector}
@@ -32,9 +32,9 @@ This data frame represents the combined ouput of the function clones() for 8 ind
 \examples{
 data(clones.allind)
 str(clones.allind)
-boxplot(clones.allind$CDR3_length_AA ~ clones.allind$individual,xlab="individuals",
-     ylab="CDR3 length [AA]",xaxt="n",main="CDR3 length distribution of clones")
-axis(1,at=seq(1,length(unique(clones.allind$individual)),1),
-     unique(clones.allind$individual))
+boxplot(clones.allind$CDR3_length_AA ~ clones.allind$samples,xlab="sample",
+     ylab="CDR3 length [AA]",xaxt="n",main="CDR3 length distribution of clones", las=3)
+axis(1,at=seq(1,length(unique(clones.allind$samples)),1),
+     unique(clones.allind$samples))
 }
 \keyword{datasets}

@@ -5,7 +5,7 @@
 Filter for productive/unproductive clones
 }
 \description{
-This function filters for productive or unproductive clones. Clones that include only productive or only unproductive sequences will be filtered.
+Clones containing only productive or only unproductive sequences are filtered.
 }
 \usage{
 clones.filterFunctionality(clones.tab = NULL, 
@@ -22,7 +22,7 @@ clones.filterFunctionality(clones.tab = NULL,
 }
 
 \value{
-Output is a data frame, that contains clones with only productive or unproductive sequences.
+Output is a data frame, that contains clones with only productive or unproductive sequences. 
 }
 \references{
 IMGT/LIGM-DB labels: \url{http://www.imgt.org/ligmdb/label}

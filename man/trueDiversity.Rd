@@ -6,7 +6,7 @@
 True diversity of sequences
 }
 \description{
-This function provides information about the true diversity. Richness or diversity is calculated for sequences of the same length, for each position. Analysis of true diversity of order 0, 1 and 2 is possible. 
+This function provides information about the true diversity. Richness or diversity is calculated for sequences of the same length, for each position. Analysis of true diversity of order 0 (richness), 1 (Shannon) and 2 (Simpson) is possible (see Details). 
 
 \code{trueDiversity} returns a list containing diversity indices.
 
@@ -42,15 +42,15 @@ plotTrueDiversity(trueDiversity.tab=NULL,color="black", PDF=NULL,...)
 }
 }
 \details{
-This functions needs either a vector of sequences or the output of \code{AADistribution()} as input. In first case \code{AADistribution()} is first applied to data set. Richness or diversity is calculated for sequences of the same length, for each position. Analysis of true diversity of order \code{0, 1} and \code{2} is possible. 
-Order 0: Richness (in this case it represents number of different amino acids per position).
-Order 1: Exponential function of Shannon entropy using the natural logarithm as the base (weights all amino acids by their frequency).
-Order 2: Inverse Simpson entropy (weights all amino acids by their frequency, but weights are given more to abundant amino acids).
+This functions needs either a vector of sequences or the output of \code{AADistribution()} as input. In first case \code{AADistribution()} is applied to data set and than diversity is measured. Richness or diversity is calculated for sequences of the same length, for each position. Analysis of true diversity of order \code{0, 1} and \code{2} is possible.     
+Order 0: Richness (in this case it represents number of different amino acids per position).    
+Order 1: Exponential function of Shannon entropy using the natural logarithm (weights all amino acids by their frequency).    
+Order 2: Inverse Simpson entropy (weights all amino acids by their frequency, but weights are given more to abundant amino acids).    
 These indices are very similar (Hill, 1973). For example the exponential function of Shannon index is linearly related to inverse Simpson.
 
 \code{plotTrueDiversity} returns an image with diversity plots for each length. Each plot contains the richness or diversity (y-axis) for each position (x-axis). 
 
-The \code{PDF} character string should be only the project name (without ".pdf"). A figure called "PDF"_True-diversity_q"order".pdf will be saved to your working directory. 
+The \code{PDF} character string should be only the project name (without ".pdf"). A figure called "PDF"_True-diversity_q"order".pdf will be saved to the working directory. 
 }
 \value{
 Output is a list containing

@@ -2,10 +2,10 @@
 \alias{geneUsage}
 \alias{plotGeneUsage}
 \title{
-Gene usage of clones
+Gene usage statistics
 }
 \description{
-This function gives information about the gene usage of clones. Results can returned as relative or absolute values and be visualized as a barplot, using \code{plotGeneUsage}.
+This function gives information about the gene usage distribution. Results can returned as relative or absolute values and be visualized as a barplot, using \code{plotGeneUsage}. Further gene usage can be analyzed in relation to functionality or junction frame usage.
 }
 \usage{
 geneUsage(genes = NULL, level = c("subgroup", "gene", "allele"), 
@@ -27,7 +27,7 @@ plotGeneUsage(geneUsage.tab=NULL,plotFunctionality=FALSE,plotJunctionFr=FALSE,
 	Vector containing functionality information
 }
 \item{junctionFr}{
-	Vector containing functionality information o
+	Vector containing functionality information
 }
 \item{abundance}{
 	Shall relative or absolute values be returned? (default: relative)
@@ -56,11 +56,11 @@ plotGeneUsage(geneUsage.tab=NULL,plotFunctionality=FALSE,plotJunctionFr=FALSE,
 }
 }
 \details{
-Vector of genes will be analyzed for one of the levels \code{subgroup} (f.e. IGHV1), \code{gene} (f.e. IGHV1-1) or \code{allele} (f.e. IGHV1-1*2).
+Vector of genes will be analyzed for one of the levels \code{subgroup} (e.g. IGHV1), \code{gene} (e.g. IGHV1-1) or \code{allele} (e.g. IGHV1-1*2).
 
-The \code{PDF} character string should be only the project name (without ".pdf"). For only gene usage, a plot called "PDF"_Gene-usage.pdf will be saved to your working direktory. 
+The \code{PDF} character string should be only the project name (without ".pdf"). For an analysis of the gene usage distribution, a plot called "PDF"_Gene-usage.pdf will be saved to the working direktory. 
 
-If \code{geneUsage.Func = T} a figure called "PDF"_Gene-usage_vs_Functionality.pdf will be saved and if \code{geneUsage.JunctionFr = T} a figure called "PDF"_Gene-usage_vs_Junction-frame.pdf will be saved.
+If \code{geneUsage.Func = T} gene usage vs. functionality will be analyzed (and a figure called "PDF"_Gene-usage_vs_Functionality.pdf will be saved) and if \code{geneUsage.JunctionFr = T} gene usage vs. junction frame usage will be analyzed (and figure called "PDF"_Gene-usage_vs_Junction-frame.pdf will be saved).
 }
 \value{
 Output is a list containing

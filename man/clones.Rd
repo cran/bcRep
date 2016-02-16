@@ -5,7 +5,7 @@
 Grouping sequences into clones
 }
 \description{
-This function uses IMGT/HighV-QUEST output files to define B cell clones. Therefore criteria using amino acid CDR3 sequences, V genes and J genes (optional) are used. A treshold for CDR3 identity can be given. Parallel processing is possible.
+This function uses IMGT/HighV-QUEST output files to define B cell clones. Therefore criteria using amino acid CDR3 sequences, V genes and J genes (optional) are used. A treshold for CDR3 identity/similarity can be given. Parallel processing is possible.
 }
 \usage{
 clones(aaseqtab = NULL, summarytab = NULL, ntseqtab = NULL, identity = 0.85, 
@@ -29,7 +29,7 @@ clones(aaseqtab = NULL, summarytab = NULL, ntseqtab = NULL, identity = 0.85,
 	Treshold of CDR3 identity. A value between 0 and 1.
 }
   \item{useJ}{
-	Shall J gene be included into analysis? default: TRUE
+	Shall J genes be included into analysis? default: TRUE
 }
   \item{dispD}{
 	Shall D genes and alleles be returned? default: FALSE
@@ -65,7 +65,7 @@ clones(aaseqtab = NULL, summarytab = NULL, ntseqtab = NULL, identity = 0.85,
 \details{
 This function uses IMGT/HighV-QUEST output to define clones. Therefore amino acid CDR3 sequences, V genes and J genes (optional) are used. 
 Criteria for clone groups are 1) same CDR3 length, 2) CDR3 identity of a given treshold, 3) same V gene and 4) same J gene (optional). 
-A treshold for CDR3 identity has to be between 0 and 1. A cutoff of 0.85 means CDR3 identity of 85\%. For example for a CDR3 length of 15 amino acids 85\% identity would mean that at least 11 of 15 positions have to be identical (0.85*15 = 10.75; values are rounded up).
+A treshold for CDR3 identity has to be between 0 and 1. A cutoff of 0.85 means CDR3 identity of 85\%. For example for a CDR3 length of 15 amino acids 85\% identity would mean that at least 11 of 15 positions have to be identical (0.85*15 = 10.75; values are rounded).
 
 \code{useJ=T} includes also the criteria of same J genes for clone defintion.
 
@@ -100,10 +100,12 @@ Julia Bischof
  \code{\link{plotGeneUsage}}, \code{\link{clones.shared}}
 }
 \examples{
+\dontrun{
 data(summarytab)
 data(aaseqtab)
 
 clones.tab<-clones(aaseqtab=aaseqtab,summarytab=summarytab, identity=0.85, useJ=TRUE, 
      dispCDR3aa=TRUE, dispFunctionality.ratio=TRUE, dispFunctionality.list=TRUE)
+}
 }
 

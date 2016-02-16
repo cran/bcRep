@@ -2,16 +2,16 @@
 \alias{clones.shared}
 \alias{clones.shared.summary}
 \title{
-Shared clones between individuals
+Shared clones between samples
 }
 \description{
-\code{clones.shared} compares clones of different individuals to find shared clones with identical or similar CDR3 sequences. Criteria for same/similar clones are 1) same CDR3 length, 2) CDR3 identity of a given treshold, 3) same V gene, 4) same J gene (optional). Parallel processing is possible.
+\code{clones.shared} compares clones of different samples to find shared clones with identical or similar CDR3 sequences. Criteria for same/similar clones are 1) same CDR3 length, 2) CDR3 identity of a given treshold, 3) same V gene, 4) same J gene (optional). Parallel processing is possible.
 
-\code{clones.shared.summary} provides information about the number of shared clones between two or more individuals.
+\code{clones.shared.summary} provides information about the number of shared clones between two or more samples.
 }
 \usage{
 clones.shared(clones.tab = NULL, identity = 0.85, useJ = TRUE, dispD = TRUE, 
-     dispCDR3aa = TRUE, dispCDR3nt = FALSE, dispFunctionality.list = FALSE, 
+     dispCDR3aa = FALSE, dispCDR3nt = FALSE, dispFunctionality.list = FALSE, 
      dispFunctionality.ratio = FALSE, dispJunctionFr.list = FALSE, 
      dispJunctionFr.ratio = FALSE, dispTotalSeq = FALSE, nrCores=1)
 
@@ -32,7 +32,7 @@ clones.shared.summary(shared.tab = NULL, clones.tab = NULL)
      TRUE: return D gene and allele in output data frame (only, if they are included in input; default: TRUE)
 }
   \item{dispCDR3aa}{
-     TRUE: return CDR3 amino acid sequences in output data frame (only, if they are included in input; default: TRUE)
+     TRUE: return CDR3 amino acid sequences in output data frame (only, if they are included in input; default: FALSE)
 }
   \item{dispCDR3nt}{
      TRUE: return CDR3 nucleotide sequences in output data frame (only, if they are included in input; default: FALSE)
@@ -60,8 +60,8 @@ clones.shared.summary(shared.tab = NULL, clones.tab = NULL)
 }
 }
 \details{
-\code{clones.shared}: Criteria for clone groups are 1) same CDR3 length, 2) CDR3 identity of a given treshold, 3) same V gene and 4) same J gene (optional). Same or similar CDR3 sequence has to be shared between at least two individuals.
-A treshold for CDR3 identity has to be between 0 and 1. A cutoff of 0.85 means CDR3 identity of 85\%. For example for a CDR3 length of 15 amino acids 85\% identity would mean that at least 11 of 15 positions have to be identical (0.85*15 = 10.75; values are rounded up).
+\code{clones.shared}: Criteria for clone groups are 1) same CDR3 length, 2) CDR3 identity of a given treshold, 3) same V gene and 4) same J gene (optional). Same or similar CDR3 sequences has to be shared between at least two samples.
+A treshold for CDR3 identity has to be between 0 and 1. A cutoff of 0.85 means CDR3 identity of 85\%. For example for a CDR3 length of 15 amino acids 85\% identity would mean that at least 11 of 15 positions have to be identical (0.85*15 = 10.75; values are rounded).
 
 \code{useJ=T} includes also the criteria of same J genes for clone defintion.
 
@@ -69,8 +69,8 @@ A treshold for CDR3 identity has to be between 0 and 1. A cutoff of 0.85 means C
 }
 \value{
 Output of \code{clones.shared} is a data frame including
-  \item{number_individuals}{The number of individuals, that share this clones}  
-  \item{individuals}{Individual ID's, seperated by ";"}
+  \item{number_samples}{The number of samples, that share this clones}  
+  \item{samples}{Sample ID's, seperated by ";"}
   \item{CDR3_length_AA}{length of CDR3 amino acid sequence}
   \item{shared_CDR3}{shared (100\% identity) or similar (<100\% identity) CDR3 sequence}
   \item{number_shared_CDR3}{Number of shared CDR3 sequences}  
@@ -93,9 +93,11 @@ Julia Bischof
 \code{\link{clones}}
 }
 \examples{
+\dontrun{
 data(clones.allind)
 sharedclones<-clones.shared(clones.tab = clones.allind, identity = 0.85, useJ = TRUE, 
      dispD = TRUE, dispCDR3aa = TRUE)
 sharedclones.summary<-clones.shared.summary(shared.tab = sharedclones)
+}
 }
 

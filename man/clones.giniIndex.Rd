@@ -22,7 +22,8 @@ clones.giniIndex(clone.size = NULL, PDF = NULL)
 \details{
 This function calculates the Gini index of clones. Input is a vector containing clone sizes (copy number). The Gini index measures the inequality of clone size distribution. It's between 0 and 1. An index of 0 represents a polyclonal distribution, where all clones have same size. An index of 1 represents a perfect monoclonal distribution.
 
-The \code{PDF} character string should be only the project name (without ".pdf"). A figure called "PDF"_Lorenz-curve.pdf will be saved to your working directory. The Lorenz curve represents the clone distribution.
+The \code{PDF} character string should be only the project name (without ".pdf").    
+A figure called "PDF"_Lorenz-curve.pdf will be saved to the working directory. The Lorenz curve represents the clone distribution.
 
 }
 

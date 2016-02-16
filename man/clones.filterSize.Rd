@@ -36,15 +36,15 @@ clones.filterSize(clones.tab = NULL, column = NULL, number = NULL,
 \details{
 This function filters clones for their size (clone copy number; total number of sequences belonging to a clone). It can be filtered for 
 
-1) a given number of sequences, f.e. \code{number=20}: the 20 biggest and/or 20 smallest clones,
+1) a given number of sequences, e.g. \code{number=20}: the 20 biggest and/or 20 smallest clones,
 
-2) a proportion of all clones, f.e. \code{propOfClones=0.2}: the 20\% biggest and/or smallest clones,
+2) a proportion of all clones, e.g. \code{propOfClones=0.2}: the 20\% biggest and/or smallest clones,
 
-3) a proportion of all sequences, f.e. \code{propOfSequences=0.01}: Clones, were more and/or less than 1\% of all sequences are included.
+3) a proportion of all sequences, e.g. \code{propOfSequences=0.01}: Clones, were more and/or less than 1\% of all sequences are included.
 
-Only of of these criteria is required.
+Only of these criteria is required.
 
-\code{Method} represents, if 1) biggest and smallest clones (\code{two.tailed}), 2) biggest clones (\code{upper.tail}) or 3) smallest clones (\code{lower.tail}) be returned. In case of \code{two.tailed} a list containing upper and lower tail will be returned.
+\code{Method} determines which clones shall be returned: 1) biggest and smallest clones (\code{two.tailed}), 2) biggest clones (\code{upper.tail}) or 3) smallest clones (\code{lower.tail}). In case of \code{two.tailed} a list containing upper and lower tail will be returned.
 }
 \value{
 Ouput is a data frame (\code{upper.tail, lower.tail}) or a list (\code{two.tailed}), containing filtered clones.

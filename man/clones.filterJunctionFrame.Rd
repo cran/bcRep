@@ -5,7 +5,7 @@
 Filter for in-frame/out-of-frame clones
 }
 \description{
-This function filters for in-frame or out-of-frame clones. Clones that include only in-frame or only out-of-frame sequences will be filtered.
+Clones containing only in-frame or only out-of-frame sequences can be filtered.
 }
 \usage{
 clones.filterJunctionFrame(clones.tab = NULL, 

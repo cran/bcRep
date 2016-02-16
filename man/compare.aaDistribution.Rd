@@ -5,7 +5,7 @@
 Compare amino acid distribution of different samples
 }
 \description{
-This function compares the amino acid distribution of different sequence lengths of different samples. Further the number of sequences for each sample can be returned. Parallel processing is possible.
+This function compares the amino acid distribution of different samples. Sequences of the same length are clustered and analyzed. Additionally the number of sequences for each sample can be returned. Parallel processing is possible.
 }
 \usage{
 compare.aaDistribution(sequence.list = NULL, names = NULL, numberSeq = FALSE, 
@@ -45,17 +45,17 @@ plotCompareAADistribution(comp.tab = NULL, plotSeqN = FALSE, colors = NULL,
 }
 }
 \details{
-Amino acid distribution for each individual is analysed.
+Amino acid distribution for each individual is analyzed. Sequenzes of the same length are clustered and amino acid distribution for each position is measured.
 
 The \code{PDF} character string should be only the project name (without ".pdf"). 
 
-A figure called "PDF"_Comparison_Amino-acid-distribution.pdf will be saved to your working directory. 
+A figure called "PDF"_Comparison_Amino-acid-distribution.pdf will be saved to the working directory. 
 
 Optional another figure called PDF"_Comparison_Number-of-sequences.pdf" will be returned.
 
 }
 \value{
-Output is a list containing amino acid distributions for each sequence length.
+Output is a list containing amino acid distributions for each sequence length and each sample.
 }
 \author{
 Julia Bischof

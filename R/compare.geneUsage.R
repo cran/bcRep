@@ -1,9 +1,9 @@
 ## Julia Bischof
 ## 15-10-2015
 
-library(gplots)
-library(doParallel)
-library(parallel)
+#library(gplots)
+#library(doParallel)
+#library(parallel)
 
 
 compare.geneUsage<-function(gene.list=NULL,level=c("subgroup","gene","allele"),abundance=c("relative","absolute"),names=NULL, nrCores=1){
@@ -25,7 +25,11 @@ compare.geneUsage<-function(gene.list=NULL,level=c("subgroup","gene","allele"),a
 
   
   genes.all<-unique(unlist(apply(data.frame(unique(unlist(gene.list))),1,function(x){strsplit(x,split=" |,|[.]|/|_|;")})))
-  genes.all<-sort(genes.all[grep(substr(strsplit(gene.list[[1]][1],split=" ")[[1]][2],1,4),genes.all)])
+  if(length(grep(" ", gene.list[[1]][1]))>0){
+    genes.all<-sort(genes.all[grep(substr(strsplit(gene.list[[1]][1],split=" ")[[1]][grep("[A-Z]",strsplit(gene.list[[1]][1],split=" ")[[1]])][2],1,4),genes.all)])
+  }else{
+    genes.all<-sort(genes.all)
+  }
   if(level=="subgroup"){
     genes.all<-sort(unique(unlist(apply(data.frame(genes.all),1,function(x){strsplit(x,split="S|-")[[1]][1]}))))
   }

@@ -1,7 +1,7 @@
 ## Julia Bischof
 ## 15-10-2015
 
-library(ineq)
+#library(ineq)
 
 clones.giniIndex<-function(clone.size=NULL, PDF=NULL){
   

@@ -7,8 +7,8 @@ Advanced Analysis of B Cell Receptor Repertoire Data
 
 }
 \description{
-This package helps to analyze IMGT/HighV-QUEST output, in more detail. It functions well with B cells, but can also be used for T cell data, in some cases.
-Using this package you can read IMGT/HighV-QUEST output files and study sequences and clones. In special their functionality, junction frames, gene usage and mutations. Functions to analyze clones out of the IMGT/HighV-QUEST output, but also to compare sequences and clones, are provided.
+This package helps to analyze IMGT/HighV-QUEST output data, in more detail. It functions well with B cells, but can also be used for T cell data, in some cases.
+Using this package IMGT/HighV-QUEST output files can be readed and sequences and clones studied. In special their functionality, junction frames, gene usage and mutations. Functions to analyze clones, but also to compare sequences and clones, are provided. Further distances based on sequence or gene usage data can be calculated and multidimensional scaling can be performed.
 }
 \details{
 \tabular{ll}{
@@ -18,7 +18,7 @@ Version: \tab 1.0\cr
 Date: \tab 2015-09-09\cr
 License: GPL-2
 }
-For many of the functions you need output data from IMGT/HighV-QUEST. In this case the required input file is given in help and you can use \code{readIMGT()} to read these files. For sequence analysis you can use functions like \code{sequences.functionality()} or \code{sequences.junctionFrame()}, which give an overview about functionality or junction frame usage of sequences. Further gene usage (\code{geneUsage()}) and gene/gene combinations (\code{sequences.geneComb()}) can be analyzed. The function \code{sequences.mutation()} returns an overview of all mutations, replacement and silent mutations, as well as the R/S ratio in several regions like V, FR1-3, CDR1-2. IMGT/HighV-QUEST output can also be used to analyze clones (\code{clones()}). Therefore criteria can be changed and results of for example different individuals be compared (\code{clones.shared()}). Further more amino acid distributions, as well as richness and diversity of sequences, like CDR3, can be studied (\code{AADistribution()}, \code{trueDiversity()}). Special plot function for most of the methods are provided.
+For many of the functions output data from IMGT/HighV-QUEST is required. In this case the particularly input file is given in the corresponding help file and \code{readIMGT()} can be used to read these files. IMGT files from different folders can be combined using \code{combineIMGT()}. For sequence analysis functions like \code{sequences.functionality()} or \code{sequences.junctionFrame()} exist, which give an overview about functionality or junction frame usage of sequences. Further gene usage (\code{geneUsage()}) and gene/gene combinations (\code{sequences.geneComb()}) can be analyzed. The function \code{sequences.mutation()} returns an overview of all mutations, replacement and silent mutations, as well as the R/S ratio in several regions like V, FR1-3, CDR1-2. IMGT/HighV-QUEST output can also be used to analyze clones (\code{clones()}). Therefore criteria can be changed (CDR3 identity, V and J gene usage) and results of different samples be compared (\code{clones.shared()}). Further more amino acid distributions, as well as Gini index, richness and diversity of sequences, can be studied (\code{AADistribution()}, \code{trueDiversity()}, \code{clones.GiniIndex()}). Principal coordinate analysis on sequences, as well as on gene usage data can be perfomed, using different distances (\code{sequences.distance()}, \code{geneUsage.distance()}, \code{dist.PCoA}). Special plot function for most of the methods are provided.
 }
 \author{
 Julia Bischof
@@ -26,7 +26,7 @@ Julia Bischof
 Maintainer: Julia Bischof <Julia.Bischof@uksh.de>
 }
 \references{
-Alamyar, E. et al., IMGT/HighV-QUEST: A High-Throughput System and Web Portal for the Analysis of Rearranged Nucleotide Sequences of Antigen Receptors, JOBIM 2010, Paper 63 (2010).
+Alamyar, E. et al., IMGT/HighV-QUEST: A High-Throughput System and Web Portal for the Analysis of Rearranged Nucleotide Sequences of Antigen Receptors, JOBIM 2010, Paper 63 (2010). Website: \url{http://www.imgt.org/}
 
 Brochet, X. et al., Nucl. Acids Res. 36, W503-508 (2008). PMID: 18503082
 
@@ -47,6 +47,7 @@ data(aaseqtab2)
 data(mutationtab)
 data(clones.ind)
 data(clones.allind)
+data(vgenes) 
 
 ## Combine IMGT/HighV-QUEST folders and read data
 combineIMGT(folders = c("pathTo/IMGT1a", "pathTo/IMGT1b", "pathTo/IMGT1c"), 
@@ -66,12 +67,14 @@ Vsubgroup.usage<-geneUsage(genes = clones.ind$V_gene,
 Vgenes.comp<-compare.geneUsage(gene.list = list(aaseqtab$V_GENE_and_allele, 
      aaseqtab2$V_GENE_and_allele), level = "subgroup", abundance = "relative", 
      names = c("IndA", "IndB"), nrCores = 1)
-plotCompareGeneUsage(comp.tab = Vgenes.comp, color = c("gray97", "darkblue"), PDF = "Example")
+plotCompareGeneUsage(comp.tab = Vgenes.comp, color = c("gray97", "darkblue"), 
+     PDF = "Example")
 
 
 ## Gene/gene combinations
 VDcomb.tab<-sequences.geneComb(family1 = summarytab$V_GENE_and_allele, 
-     family2 = summarytab$D_GENE_and_allele, level = "subgroup", abundance = "relative")
+     family2 = summarytab$D_GENE_and_allele, level = "subgroup", 
+     abundance = "relative")
 plotGeneComb(geneComb.tab=VDcomb.tab, color="red", withNA=FALSE,PDF="test")
 
 
@@ -87,7 +90,7 @@ clones.tab<-clones(aaseqtab=aaseqtab,summarytab=summarytab, identity=0.85, useJ=
 plotClonesCDR3Length(CDR3Length = clones.ind$CDR3_length_AA, 
      functionality = clones.ind$Functionality_all_sequences,  
      color="gray",abundance="relative", PDF="test")
-clones.func<-clones.filterFunctionality(clones.filterFunctionality(clones.tab = clones.ind, 
+clones.func<-clones.filterFunctionality(clones.tab = clones.ind, 
      filter = "productive")   
 
 ## Find shared clones between individuals
@@ -106,5 +109,21 @@ plotCompareTrueDiversity(comp.tab = trueDiv.comp, PDF = "Example")
 
 ## Gini index
 gini<-gini<-clones.giniIndex(clone.size=clones.ind$total_number_of_sequences)
+
+## Dissmilarity/distance indices of gene usage and sequence data
+
+distGeneUsage<-geneUsage.distance(geneUsage.tab = Vgenes, method = "bc")
+distSequence<-sequences.distance(sequences = clones.ind$unique_CDR3_sequences_AA, 
+     method = "levenshtein", divLength=TRUE)
+
+## Principal coordinate analysis of distance matrices + visualization
+distpcoa<-dist.PCoA(dist.tab = distGeneUsage, correction = "none")
+     # 'groups' data.frame for plot function: in the case, there are no groups:
+groups.vec<-unlist(apply(data.frame(clones.ind$unique_CDR3_sequences_AA),1,
+          function(x){strsplit(x,split=", ")[[1]]}))
+groups.vec<-cbind(groups.vec, 1)
+plotDistPCoA(pcoa.tab = distpcoa, groups=groups.vec, axes = c(1,2), 
+     plotCorrection = FALSE, title = NULL, plotLegend=TRUE, PDF = "TEST")    
+
 }
 }

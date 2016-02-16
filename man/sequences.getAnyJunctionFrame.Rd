@@ -24,12 +24,12 @@ sequences.getOutOfFrames(data = NULL)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
-     IMGT/HighV-QUEST output file with junction frame information, f.e. 1_Summary().txt, ...
+     IMGT/HighV-QUEST output file with junction frame information, e.g. 1_Summary().txt, ...
 }
 }
 
 \value{
-Output is a data frame with the same columns like the input, but filtered for only in-frame, out-of-frame or sequences having any junction frame information.
+Output is a data frame with the same columns like the input, but filtered for only in-frame or out-of-frame sequences or sequences having any junction frame information.
 }
 \references{
 IMGT/LIGM-DB labels: \url{http://www.imgt.org/ligmdb/label}

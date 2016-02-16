@@ -1,11 +1,11 @@
 ## Julia Bischof
 ## 10-15-2015
 
-library(doParallel)
-library(parallel)
+#library(doParallel)
+#library(parallel)
 
 compare.aaDistribution<-function(sequence.list=NULL, names=NULL, numberSeq=FALSE, nrCores=1){
-  if(length(sequence.list)<2){
+  if(length(sequence.list)<2 && is.list(sequence.list)==F){
     stop("--> Need a list of at least 2 vectors")
   }
   

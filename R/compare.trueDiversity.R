@@ -1,8 +1,8 @@
 ## Julia Bischof
 ## 10-15-2015
 
-library(vegan)
-library(doParallel)
+#library(vegan)
+#library(doParallel)
 
 
 compare.trueDiversity<-function(sequence.list=NULL,comp.aaDistribution.tab=NULL,order=c(0, 1, 2), 

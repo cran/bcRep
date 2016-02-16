@@ -1,8 +1,8 @@
 ## Julia Bischof
 ## 10-09-2015
 
-library(doParallel)
-library(parallel)
+#library(doParallel)
+#library(parallel)
 
 clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, useJ=TRUE,dispD=FALSE, 
                  dispSeqID=FALSE,dispCDR3aa=FALSE,dispCDR3nt=FALSE,dispJunctionFr.ratio=FALSE,

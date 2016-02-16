@@ -1,26 +1,30 @@
+<!-- rmarkdown v1 
+%\VignetteIndexEntry{bcRep: Advanced Analysis of B Cell Receptor RepertoireData},  \n
+          %\VignetteEngine{knitr::rmarkdown}  , \n
+          %\VignetteDepends{bcRep, pander, parallel, doParallel, vegan, ape, stringdist,gplots, ineq, foreach, knitr}, \n
+          %\VignetteEncoding{UTF-8}, \n
+          %\usepackage[utf8]{inputnc}
+-->
+
 ---
 title: 'bcRep: Advanced Analysis of B Cell Receptor Repertoire Data'
 author: "Julia Bischof <Julia.Bischof@uksh.de>"
 date: '`r Sys.Date()`'
 output:
-  html_document:
-    theme: united
-    toc: yes
   pdf_document:
     toc: yes
     toc_depth: 3
+  html_document:
+    theme: united
+    toc: yes
   word_document: default
-vignette: |
-  %\VignetteIndexEntry{bcRep: Advanced Analysis of B Cell Receptor Repertoire Data}  
-  %\VignetteEngine{knitr::rmarkdown}  
-  %\VignetteEncoding{UTF-8} 
-  %\usepackage[utf8]{inputnc} 
-  %\VignetteDepends{bcRep, pander, parallel, doParallel, vegan}
 ---
 
 ## Introduction
-Th bcRep package helps to analyze IMGT/HighV-QUEST output, in more detail. It functions well with B cells, but can also be used for T cell data, in some cases.
-Using this package you can read IMGT/HighV-QUEST output files and study sequences and clones. In special their functionality, junction frames, gene usage and mutations. Functions to analyze clones out of the IMGT/HighV-QUEST output, but also to compare sequences and clones, are provided.
+The bcRep package helps to analyze IMGT/HighV-QUEST* output in more detail. It functions well with B cells, but can also be used for T cell data, in some cases.  
+Using this package IMGT/HighV-QUEST output files can be analysed, f.e. functionality, junction frames, gene usage and mutations. The package provides functions to analyze clones out of the IMGT/HighV-QUEST output, but also methods to compare sequences and clones, are provided. Further a function to do principal coordinate analysis on dissimilarity/distance measurements is implemented. Almost all results can be visualized via implemented plotting functions.
+
+*: Alamyar, E. et al., IMGT/HighV-QUEST: A High-Throughput System and Web Portal for the Analysis of Rearranged Nucleotide Sequences of Antigen Receptors, JOBIM 2010, Paper 63 (2010). Website: http://www.imgt.org/
 
 ## Package features
 * Handling IMGT/HighV-QUEST output: combine several output folders; read IMGT tables
@@ -29,18 +33,19 @@ Using this package you can read IMGT/HighV-QUEST output files and study sequence
 * Clonotype analysis: cluster sequences to clones
 * Gene usage analysis
 * Basic mutation analysis
-* Amino acid distribution and diversity: amino acid distribution, richnes, Shannon index, inverse Shannon index, Gini index
+* Amino acid distribution and diversity: amino acid distribution, richness, Shannon index, inverse Shannon index, Gini index
 * Comparison of different samples: gene usage, amino acid distribution, diversity, clones
+* Distances and Principal coordinate analysis on gene usage and sequence data
 * several visualization methods
 
 ## General information and package data
-Before installing bcRep, following packages need to be installed: `vegan, gplots, ineq, parallel, doParallel, foreach`.
+bcRep depends on following packages: `vegan, gplots, ineq, parallel, doParallel, foreach, ape, stringdist`.
 
 ### Parallel processing
-Parallel processing is possible for functions `clones(), clones.shared(), sequences.geneComb(), compare.aaDistribution(), compare.geneUsage()` and `compare.trueDiversity`. Using only one core is the default parameter.
+Parallel processing is possible for functions `clones(), clones.shared(), sequences.geneComb(), compare.aaDistribution(), compare.geneUsage()` and `compare.trueDiversity()`. By default, 1 core is used.
 
 ### Datasets
-There are several datasets provided in the package. Most of them are examples of IMGT/HighV-QUEST output; two additional files represent clonotype files:
+There are several datasets provided in the package. Most of them are examples of IMGT/HighV-QUEST output; two additional files represent clonotype files and one gene usage data:
 
 ```r
 library(bcRep)
@@ -53,17 +58,11 @@ data(mutationtab) # An extract from IMGT/HighV-QUEST output file
 data(clones.ind) # Clonotypes of one individual
 data(clones.allind) # Clonotypes of eight individuals
 
-# Get first 6 lines of each file
-head(summarytab)
-head(ntseqtab)
-head(aaseqtab)
-head(mutationtab)
-head(clones.ind)
-head(clones.allind)
+data(vgenes) # V gene usage of 10 individuals (rows) and 30 genes (columns)
 ```
 
 ## Processing of IMGT/HighV-QUEST data
-IMGT/HighV-QUEST can process datasets with up to 500.000 sequences. If you like to study bigger datasets, you have to split the input FASTA-file into smaller datasets and upload them individually to IMGT. Afterwards you can use function `combineIMGT()` to combine several folders.
+IMGT/HighV-QUEST can process datasets with up to 500.000 sequences. For larger data sets, FASTA files have to be splitted into smaller datasets and be uploaded individually to IMGT. Afterwards the function `combineIMGT()` can be used to combine several folders.
 
 ```{r, eval=FALSE}
 # Example: combine folders IMGT1a, IMGT1b and IMGT1c to a new datset NewProject
@@ -72,14 +71,14 @@ combineIMGT(folders = c("pathTo/IMGT1a", "pathTo/IMGT1b", "pathTo/IMGT1c"),
 ```
 
 
-To read IMGT/HighV-QUEST output files, use `readIMGT("PathTo/file.txt",filterNoResults=TRUE)`. You can choose between including or excluding sequences without any information (that are lines with a sequence ID, but "No results"). Spaces and "-" in headers will be replaced by "_". If there is a special table required as input for a function, this is mentioned in the corresponding help file.
+To read IMGT/HighV-QUEST output files, use `readIMGT("PathTo/file.txt",filterNoResults=TRUE)`. You can choose between including or excluding sequences without any information (lines with a sequence ID, but "No results"). Spaces and "-" in headers will be replaced by "_". If there is a particular IMGT table required as input for a function, this is mentioned in the corresponding help file.
 
 ## Amino acid distribution
 Amino acid distribution can be analyzed using `aaDistribution()` and visualized with `plotAADistribution()`.
 
 This function returns a list containing proportions of all amino acids (including stop codons "*") for each analyzed sequence length. Optionally, also the number used for analysis can be given.
 
-Figures can be saved as PDF to the working directory.
+Figures can be saved as PDF in the working directory.
 
 
 ```{r, echo=F}
@@ -98,7 +97,7 @@ aadistr<-aaDistribution(sequences = aaseqtab$CDR3_IMGT, numberSeq = TRUE)
 library(pander)
 pandoc.table(aadistr$Amino_acid_distribution$`sequence length = 13`[, 1:4])
 
-```{r, echo=T, fig.width = 9, fig.height = 7, fig.align='center'}
+```{r, echo=T, fig.width = 8, fig.height = 6, fig.align='center'}
 # Plot example for sequence lengths of 14-17 amino acids:
 aadistr.part<-list(aadistr$Amino_acid_distribution[13:16], 
                    data.frame(aadistr$Number_of_sequences_per_length[13:16,]))
@@ -111,11 +110,11 @@ plotAADistribution(aaDistribution.tab=aadistr.part, plotAADistr=TRUE,
 Diversity of sequences and clones can be analyzed using `trueDiversity()` or `clones.giniIndex()`.
 
 ### True diversity
-Using `trueDiversity()` richness or diversity of sequences with the same length can be analyzed. Basically diversity of amino acids per position is calculated. True diversity can be measured for orders q = 0, 1 or 2. `plotTrueDiversity()` can be used for visualization.
+Using `trueDiversity()` richness or diversity of sequences with the same length can be analyzed. Basically diversity of amino acids at each position is calculated. True diversity can be measured for orders q = 0, 1 or 2. `plotTrueDiversity()` can be used for visualization.
 
 Order 0: Richness (in this case it represents number of different amino acids per position).
 
-Order 1: Exponential function of Shannon entropy using the natural logarithm as the base (weights all amino acids by their frequency). 
+Order 1: Exponential function of Shannon entropy using the natural logarithm (weights all amino acids by their frequency). 
 
 Order 2: Inverse Simpson entropy (weights all amino acids by their frequency, but weights are given more to abundant amino acids). 
 
@@ -146,7 +145,7 @@ plotTrueDiversity(trueDiversity.tab=trueDiv.part,color="darkblue", PDF=NULL)
 ```
 
 ### Gini index
-`clones.giniIndex()` calculates the Gini index of clones. Input is a vector containing clone sizes (copy number). The Gini index measures the inequality of clone size distribution. It’s between 0 and 1. An index of 0 represents a polyclonal distribution, where all clones have same size. An index of 1 represents a perfect monoclonal distribution.
+'clones.giniIndex()' calculates the Gini index of clones. Input is a vector containing clone sizes (copy number). The Gini index measures the inequality of clone size distribution. It ranges between 0 and 1. An index of 0 represents a polyclonal distribution, where all clones have same size. An index of 1 represents a perfect monoclonal distribution.
 
 If a PDF project name is given, the Lorenz curve will be returned, as well. Lorenz curve can be interpreted as p\*100 percent have L(p)\*100 percent of clone size.
 
@@ -161,22 +160,20 @@ clones.giniIndex(clone.size=clones.ind$total_number_of_sequences, PDF = NULL)
 ## Gene usage
 Gene usage can be analyzed using functions `geneUsage()` and `sequences.geneComb()`.
 
-It can be differentiated between subgroup (f.e. IGHV1), gene (f.e. IGHV1-1) or allele (f.e. IGHV1-1*2), as well as between relative or absolute values.
+It can be differentiated between subgroup (e.g. IGHV1), gene (e.g. IGHV1-1) or allele (e.g. IGHV1-1*2), as well as between relative or absolute values.
 
-When using function `geneUsage()`, functionality and junction frame usage, dependent on gene usage can be studied. Important ist, that input vectors have same order. Single genes per line, as well as several genes per line, can be processed. IMGT nomenclature has to be used (f.e. "Homsap IGHV4-34*01")!
+When using function `geneUsage()`, functionality and junction frame usage, dependent on gene usage can be studied. Please note, that input vectors have to have the same order. Single genes per line, as well as several genes per line, can be processed. IMGT nomenclature has to be used (e.g. "Homsap IGHV4-34*01")!
 
-```{r, echo=F}
-library(bcRep)
 ```{r, fig.width = 4, fig.height = 5.3, fig.align='default'}
 # Example:
 data(summarytab)
-Vgene<-geneUsage(genes = summarytab$V_GENE_and_allele, level = "subgroup", 
+Vgu<-geneUsage(genes = summarytab$V_GENE_and_allele, level = "subgroup", 
                 functionality = summarytab$Functionality)
-plotGeneUsage(geneUsage.tab = Vgene, plotFunctionality = TRUE, PDF = NULL, 
+plotGeneUsage(geneUsage.tab = Vgu, plotFunctionality = TRUE, PDF = NULL, 
               title = "IGHV usage")
 ```
 
-Using function `sequences.geneComb()`, gene/gene ratios of two gene families will be analyzed. IMGT nomenclature has to be used (f.e. "Homsap IGHV4-34*01"), again. Results can be plotted with gene/gene combination, where one or both genes are unknown, or without.
+Using function `sequences.geneComb()`, gene/gene ratios of two gene families will be analyzed. IMGT nomenclature has to be used (e.g. "Homsap IGHV4-34*01"). Results can be plotted with and without gene/gene combinations, where one or both genes are unknown.
 
 ```{r, echo=F}
 library(bcRep)
@@ -191,7 +188,7 @@ plotGeneComb(geneComb.tab = VDcomb.tab, withNA = FALSE, PDF = NULL)
 
 
 ## Functions for a set of sequences
-There are some functions, which filter or summarize IMGT/HighV-QUEST output data:
+Function to filter and to summarize IMGT/HighV-QUEST are provided:
 
 ### Filter sequences 
 Sequence files can be filtered for functionality or junction frame usage:
@@ -204,7 +201,7 @@ Sequence files can be filtered for functionality or junction frame usage:
 * sequences.getOutOfFrames(): filters for out-of-frame sequences
 * sequences.getAnyJunctionFrame(): excludes sequences without any junction frame information
 
-The function looks for a column containing functionality or junction frame information and filters the whole table. All columns will remain, rows will be filtered. Junction frame information is only available in the IMGT summary table (`1_Summary(...).txt`). Functionality information is available in every table.
+The function looks for a column containing functionality or junction frame information and filters the whole table. Columns will remain, rows will be filtered. Junction frame information is only available in the IMGT summary table (`1_Summary(...).txt`). Functionality information is available in every table.
 
 ```{r, echo=FALSE}
 library(bcRep)
@@ -246,9 +243,8 @@ library(pander)
 
 ```{r, echo=T,results='asis'}
 data(mutationtab)
-data(summarytab)
-V.mutation<-sequences.mutation(mutationtab = mutationtab, summarytab = summarytab, 
-                               sequence = "V", junctionFr = TRUE, rsRatio=TRUE)
+V.mutation<-sequences.mutation(mutationtab = mutationtab, sequence = "V", 
+                               junctionFr = TRUE, rsRatio=TRUE)
 
 # V.mutation$Number_of_mutations, first 6 lines:
 
@@ -264,18 +260,18 @@ pandoc.table(V.mutation$Junction_frame)
 ```
 
 ## Functions for a set of clones
-BcRep provides some functions to study clone features. Some columns of the clonotype file can simply be plotted using `boxplot()` or `barplot()`.
+bcRep provides some functions to study clone features. Some columns of the clonotype file can simply be plotted using `boxplot()` or `barplot()`.
 
 ### Defining clones and shared clones
 Clones can be defined from a set of sequences, using `clones()`. Criteria for sequences, belonging to the same clones are:
 
-* same CDR3 (amino acid) length and a identity of a given treshold (it's possible, to look for same CDR3 sequences or for a CDR3 identity of f.e. 85%)
+* same CDR3 (amino acid) length and a identity of a given treshold (it's possible, to look for same CDR3 sequences or for a CDR3 identity of e.g. 85%)
 * same V gene
 * same J gene (optional)
 
 Output of the clone table can be individually specified (see help), but following columns are mandatory:
 
-* shared CDR3 amino acid sequence(s)
+* Shared CDR3 amino acid sequence(s)
 * CDR3 amino acid sequence length
 * Number of unique CDR3 sequences (each CDR3 sequence is mentioned once)
 * Number of all CDR3 sequences (CDR3 sequences are listed with duplicates)
@@ -285,7 +281,7 @@ Output of the clone table can be individually specified (see help), but followin
 * J gene (as used for analysis)
 * J gene and allele (IMGT nomenclature)
 
-Optionally columns like D gene, CDR3 amino acid sequences (f.e. for diversity analysis), CDR3 nucleotide sequences, functionality, junction frames and so on, can be specified.
+Optionally columns like D gene, CDR3 amino acid sequences, CDR3 nucleotide sequences, functionality, junction frames and so on, can be specified.
 
 ```{r, eval=FALSE}
 # Example:
@@ -298,20 +294,22 @@ clones.tab<-clones(aaseqtab = aaseqtab, summarytab = summarytab, ntseqtab = NULL
                    dispFunctionality.ratio = FALSE, dispFunctionality.list = FALSE, 
                    dispTotalSeq = FALSE, nrCores=1)
 
+```{r, eval=T, echo=T}
 # Example of a clonotype file (not from the command above)
 data(clones.ind)
+str(clones.ind, strict.width="cut", width=85)
 ```
 
 ### Filter clones for their size
-Using `clones.filterSize()` you can filter a set of clonotypes by their size. There are 3 methods for filtering:
+Using `clones.filterSize()` you can filter a set of clonotypes by their size. Three methods for filtering are available. 
 
-Giving a treshold for the parameter
+You can set tresholds for the parameters...
 
-* `number`, filters the table for a given number of sequences; f.e. 20 smallest clones
-* `propOfClones`, filters the table for a proportion of the total number of clones, f.e. the 10% biggest clones 
-* `propOfSequences`, filters the table for a proportion of all sequences, beloging to all clones; f.e. clones, that include 1% of all sequences
+* `number`: filters the table for a given number of sequences; e.g. 20 smallest clones
+* `propOfClones`: filters the table for the proportion of the total number of clones, e.g. the 10% biggest clones 
+* `propOfSequences`: filters the table for the proportion of all sequences, belonging to all clones; e.g. clones, that include 1% of all sequences
 
-Further it can be filtered for both ends (biggest and smallest clones; `two.tailed`), or only for biggest (`upper.tail`) or smallest (`lower.tail`) clones. Biggest clones means clones with biggest sequence number/size/copy number.
+Additionally, filtering can be done for both ends (biggest and smallest clones; `two.tailed`), or only for biggest (`upper.tail`) or smallest (`lower.tail`) clones. Biggest clones refers to clones with the biggest sequence number (or largest size/copy number) (same for smallest clones).
 
 ```{r, echo=FALSE}
 library(bcRep)
@@ -322,14 +320,14 @@ clones.filtered1<-clones.filterSize(clones.tab=clones.ind,
                                     column="total_number_of_sequences", 
                                     number=3, method="lower.tail")
 
-    ## Output of clones.filtered1[,c("total_number_of_sequences",
-                            ## "unique_CDR3_sequences_AA", "CDR3_length_AA", "V_gene")]:
+    # Output of clones.filtered1[,c("total_number_of_sequences",
+            # "unique_CDR3_sequences_AA", "CDR3_length_AA", "V_gene")]:
 ```{r, echo=F, results='asis'}
 pandoc.table(data.frame(clones.filtered1[,c("total_number_of_sequences","unique_CDR3_sequences_AA","CDR3_length_AA","V_gene")], row.names=NULL))
 
 ```{r, echo=T, results='markup', collapse=TRUE}
 # Example 2: Getting 10% biggest and smallest clones 
-    ## (clones with 85% CDR3 identity; column 4 = "total_number_of_sequences")
+# (clones with 85% CDR3 identity; column 4 = "total_number_of_sequences")
 clones.filtered2<-clones.filterSize(clones.tab=clones.ind, column=4, propOfClones=0.1,
                                     method="two.tailed")
 names(clones.filtered2) # a list with biggest and smallest 10% clones
@@ -337,20 +335,20 @@ dim(clones.filtered2$upper.tail) # dimension of table with biggest clones [rows,
 dim(clones.filtered2$lower.tail) # dimension of table with smallest clones [rows, columns]
 
 # Example 3: Getting clones, that include 0.5% of all sequences 
-    ## (clones with 85% CDR3 identity; column 4 = "total_number_of_sequences"")
+# (clones with 85% CDR3 identity; column 4 = "total_number_of_sequences"")
 clones.filtered3<-clones.filterSize(clones.tab=clones.ind, column=4,
                                     propOfSequences=0.005, method="two.tailed")
 names(clones.filtered3) # a list with biggest and smallest 10% clones
 dim(clones.ind) ## dimension of clones.ind table [rows, columns]
-## --> number of rows is equal to number of rows of biggest and smallest clones
+## >> number of rows is equal to number of rows of biggest and smallest clones
 dim(clones.filtered3$upper.tail) # dimension of table with biggest clones [rows, columns]
 dim(clones.filtered3$lower.tail) # dimension of table with smallest clones [rows, columns]
 ```
 
 ### Filter clones for functionality or junction frame usage
-`clones.filterFunctionality()` and `clones.filterJunctionFrame` filter set of clones for functionality or junction frame usage.
+`clones.filterFunctionality()` and `clones.filterJunctionFrame()` filter set of clones for functionality or junction frame usage.
 
-* Filtering for functionality: you can filter for clones including only productive or only unproductive sequences
+* Filtering for functionality: filter clones for only productive or unproductive sequences
 ```{r, echo=FALSE}
 library(bcRep)
 ```{r, collapse=TRUE}
@@ -364,7 +362,7 @@ dim(clones.ind)
 dim(productiveClones) 
 ```
 
-* Filtering for junction frame usage: you can filter for clones including only in-frame or only out-of-frame sequences
+* Filtering for junction frame usage: filter for only in-frame or out-of-frame sequences
 ```{r, echo=FALSE}
 library(bcRep)
 ```{r, collapse=TRUE}
@@ -378,10 +376,10 @@ dim(inFrameClones)
 ```
 
 ### Clone features
-There are some function provided to analyse clone features, like CDR3 length distribution or clone copy number.
+Functions to analyse clone features, like CDR3 length distribution or clone copy number, are provided.
 
 #### CDR3 length distribution of clones
-Using `clones.CDR3Length()` CDR3 length distribution of clones can be measured. The corresponding visualization method is `plotClonesCDR3Length()`. Input for both functions are vectors containing nucleotide or amino acid sequences. Further functionality and junction frame usage, depending on CDR3 length can be studied. Absolute or relative values can be returned.
+Using `clones.CDR3Length()` CDR3 length distribution of clones can be estimated. The corresponding visualization method is `plotClonesCDR3Length()`. Input for both functions are vectors containing nucleotide or amino acid sequences. Further functionality and junction frame usage, depending on CDR3 length can be studied. Absolute or relative values can be returned.
 
 ```{r, echo=FALSE}
 library(bcRep)
@@ -410,7 +408,7 @@ plotClonesCDR3Length(CDR3Length = clones.ind$CDR3_length_AA,
 
 #### Clone copy number distribution
 `plotClonesCopyNumber()` can be used to plot clone sizes as an boxplot.
-```{r, fig.align='center', fig.width=4, fig.height=4}
+```{r, fig.align='center', fig.width=3.5, fig.height=4.5}
 # Example: Clone copy number distribution with and without outliers
 plotClonesCopyNumber(copyNumber = clones.ind$total_number_of_sequences, 
                      withOutliers=TRUE, color = "darkblue", 
@@ -420,15 +418,15 @@ plotClonesCopyNumber(copyNumber = clones.ind$total_number_of_sequences,
                      title = "Copy number distribution", PDF = NULL)
 ```
 
-Further functions like `geneUsage()`or `trueDiversity()` can be used to further analysis of clone sets.
+Further functions like `geneUsage()`or `trueDiversity()` can be used for further analysis of clone sets.
 
 ## Comparison of different samples
-If more than one sample should be analyzed, bcRep provides some function, to compare different samples. Gene usage, amino acid distribution, diversity and shared clones can be compared and visualized.
+If more than one sample should be analyzed, bcRep provides some functions to compare different samples. Gene usage, amino acid distribution, diversity and shared clones can be compared and visualized.
 
 ### Comparison of gene usage
-Gene usage can be compared using `compare.geneUsage()`. Input is a list including sequence vectors of each individual. If no names for the samples are specified, samples will be called Sample1, Sample2, ... in the input order. Analysis of subgroup (f.e. IGHV1), gene (f.e. IGHV1-1) or allele (f.e. IGHV1-1*2), as well as of relative or absolute values is possible. 
+Gene usage can be compared using `compare.geneUsage()`. Input is a list including sequence vectors of each individual. If no names for the samples are specified, samples will be called Sample1, Sample2, ... in input order. Analysis of subgroup (e.g. IGHV1), gene (e.g. IGHV1-1) or allele (e.g. IGHV1-1*2), as well as of relative or absolute values is possible. 
 
-Results can be visualized using `plotCompareGeneUsage()` (optional be saved as PDF in working directory). A heatmap will be returned, with samples as rows and genes as columns. Proportions of genes are color coded.
+Results can be visualized using `plotCompareGeneUsage()` (optional saved as PDF in working directory). A heatmap will be returned, with samples as rows and genes as columns. Proportions of genes are color coded.
 
 ```{r, echo=FALSE}
 library(bcRep)
@@ -449,11 +447,11 @@ plotCompareGeneUsage(comp.tab = V.comp, color = c("gray97", "darkblue"), PDF = N
 ```
 
 ### Comparison of amino acid distribution
-The amino acid distribution between two or more individuals can be compared using `compare.aaDistribution()`. Input is again a list including sequence vectors for each individual. Sequences of the same length will ne analyzed together. Optional the number of sequences used for analysis can be returned, as well. If no names for the samples are specified, samples will be called Sample1, Sample2, ... in the input order.
+The amino acid distribution between two or more individuals can be compared using `compare.aaDistribution()`. Input is a list including sequence vectors for each individual. Sequences of the same length will be analyzed together. Optional the number of sequences used for analysis can be returned. If no names for the samples are specified, samples will be called Sample1, Sample2, ... in input order.
 
 The output is a list, containing amino acid distributions for each sequence length and each individual.
 
-`plotCompareAADistribution()` returns a plot (optional be saved as PDF in working directory), where columns represent the samples, and rows represent different sequence length. In each field, one bar represents one position of the sequence.
+`plotCompareAADistribution()` returns a plot (optional saved as PDF in working directory), where columns represent the samples, and rows represent different sequence lengths. In each field, one bar represents one position of the sequence.
 
 ```{r, echo=FALSE}
 library(bcRep)
@@ -467,9 +465,9 @@ AAdistr.comp<-compare.aaDistribution(sequence.list = list(aaseqtab$CDR3_IMGT,
 
 # Comparison of sequence length of 14-16 amino acids: 
 ## Individual 1: grep("14|15|16",names(AAdistr.comp$Amino_acid_distribution$Individual1)) 
-        ## --> 13:15
+        ## >> 13:15
 ## Individual 2: grep("14|15|16",names(AAdistr.comp$Amino_acid_distribution$Individual2)) 
-        ## --> 12:14
+        ## >> 12:14
 AAdistr.comp.part<-list(list(AAdistr.comp$Amino_acid_distribution$Individual1[13:15], 
                              AAdistr.comp$Amino_acid_distribution$Individual2[12:14]),
                         list(AAdistr.comp$Number_of_sequences_per_length$Individual1[13:15],
@@ -489,7 +487,7 @@ Richness and diversity can be compared using `compare.trueDiversity()`. Input ca
 
 The output is a list, containing richness or diversity indices for each sequence length and each individual.
 
-Results can be visualized using `plotCompareTrueDiversity()` (optional be saved as PDF in working directory). A plot will be returned, with one figure for each sequence length. Each figure contains the sequence position on the x-axis and the richness/diversity index on the y-axis. If no colors are specified, `rainbow()` will be used.
+Results can be visualized using `plotCompareTrueDiversity()` (optional saved as PDF in working directory). A plot will be returned, with one figure for each sequence length. Each figure contains the sequence position on the x-axis and the richness/diversity index on the y-axis. If no colors are specified, `rainbow()` will be used.
 
 ```{r, echo=FALSE}
 library(bcRep)
@@ -519,48 +517,174 @@ To compare clones of different samples, the function `clones.shared()` can be us
 * same V gene
 * same J gene (optional)
 
-The input for the function has to be prepared as following: combine all individual clone files to one using  `rbind()` and add a column in front of all other columns with sample ID's. An example, how the table should look like, you can find in `data(clones.allind)`.
+The input for the function has to be prepared as following: combine all individual clone files to one using  `rbind()` and add a first column with sample ID's. An example you can find in `data(clones.allind)`.
 ```{r, echo=FALSE}
 library(bcRep)
 library(pander)
 ```{r, collapse=TRUE}
 # Example:
-data(clones.allind) # includes 300 clones for 8 individuals (C6-9, P1-3/10)
-dim(clones.allind) # dimensions of clones.allind [rows, columns]
-
-  # Some lines and columns from clones.allind:
-    # data.frame(rbind(clones.allind[1:3,1:3],
-                # clones.allind[(nrow(clones.allind)-2):nrow(clones.allind),1:3]),
-                # row.names=NULL)
-```{r, echo=FALSE, results='asis'}
-pandoc.table(data.frame(rbind(clones.allind[1:3,1:3],clones.allind[(nrow(clones.allind)-2):nrow(clones.allind),1:3]),row.names=NULL))
+data(clones.allind) # includes 2948 clones for 7 individuals
+colnames(clones.allind) # colnames of clones.allind
 ```
 
 
-Output of the table is the same than for `clones()`. Individual data is seperated by ";".
+Output of 'clones.shared()' is a table, which can have the same columns than the ones from `clones()`. Individual data is seperated by ";". Columns like
+* Number of samples sharing a clone
+* ID's of samples sharing a clone
+* copy number of sequences per sample
+are provided.
 ```{r, eval=FALSE}
 # Example:
 data(clones.allind)
-sharedclones<-clones.shared(clones.tab = clones.allind, identity = 0.85, useJ = TRUE)
-
-  # Some columns of sharedclones
-```{r, echo=FALSE, results='asis', warning=FALSE}
-data(clones.allind)
-sharedclones<-clones.shared(clones.tab = clones.allind, identity = 0.85, useJ = TRUE)
-pandoc.table(sharedclones[,1:8])
+sharedclones<-clones.shared(clones.tab = clones.allind) 
+              # with default parameters: identity = 0.85, useJ = TRUE, ....
 ```
 
-The table including shared clones can be summarized using `clones.shared.summary()`. This function returns a data frame, which contains the number of individual clones (optional, only if clone table is given) and the number of shared clones. The number of individual clones is equivalent to the total number of clones per individual minus the number of shared clones.
+The output of 'clones.shared()' can be summarized using `clones.shared.summary()`. This function returns a data frame, which contains the number of individual clones (optional, only if clone table is given) and the number of shared clones. The number of individual clones is equivalent to the total number of clones per individual minus the number of shared clones.
 
 ```{r, eval=FALSE}
 # Example:
-data(clones.allind) # includes 300 clones for 8 individuals (C6-9, P1-3/10)
+data(clones.allind)
 sharedclones<-clones.shared(clones.tab = clones.allind, identity = 0.85, useJ = TRUE)
 sharedclones.summary<-clones.shared.summary(shared.tab = sharedclones, 
                                             clones.tab = clones.allind)
-```{r, echo=FALSE, results='asis', warning=FALSE}
+```{r, eval=TRUE, echo=TRUE}
+# Example:
 data(clones.allind)
 sharedclones<-clones.shared(clones.tab = clones.allind, identity = 0.85, useJ = TRUE)
-sharedclones.summary<-clones.shared.summary(shared.tab = sharedclones, clones.tab = clones.allind)
+sharedclones.summary<-clones.shared.summary(shared.tab = sharedclones, 
+                                            clones.tab = clones.allind)
+
+# sharedclones.summary:
+```{r, echo=FALSE, results='asis'}
 pandoc.table(sharedclones.summary)
+```
+
+## Dissimilarity and distance measurements on gene usage data 
+The function 'geneUsage.distance()' provides several dissimilarity and distance measurements for gene usage data. Bray-Curtis, Jaccard and cosine indices can be calculated on data (taken from vegan::vegdist and proxy::dist).frames with genes in columns and samples in rows, see Example below:
+```{r, echo=T, eval=F}
+# Example:
+data(vgenes) 
+vgenes[1:5,1:5]
+```{r, echo=F, results='asis', warning=FALSE}
+data(vgenes) 
+pandoc.table(vgenes[1:5,1:5])
+```
+
+'geneUsage.distance()' then calculates a distance matrix:
+```{r, echo=T, eval=F}
+# Example for 5 samples and 5 genes:
+data(vgenes) 
+geneUsage.distance(geneUsage.tab = vgenes[1:5,1:5], method = "bc")
+```{r, echo=F, results='asis', warning=FALSE}
+data(vgenes) 
+pandoc.table(geneUsage.distance(geneUsage.tab = vgenes[1:5,1:5], method = "bc"))
+```
+
+
+## Dissimilarity and distance measurements on sequences data 
+Using 'sequences.distance()' distance matrices, based on sequence data, e.g. CDR3 sequences, can be calculated.
+Following dissmilarity/distance measurements can be used (taken from stringdist::stringdist-metric):
+
+* Levenshtein
+* cosine
+* q-gram
+* Jaccard
+* Jaro-Winker ('ja-wi')
+* Damerau-Levenshtein ('dam-le')
+* Hamming
+* Optimal string alignment ('osa') 
+* Longest common substring ('lcs')
+
+Further it can be distinguished wheather all sequences or subsets of sequences of the same length shall be used for distance estimation.
+```{r, echo=T, eval=F}
+# Example 1:
+## Divide sequences into subsets of same length and then apply Levenshtein distance:
+data(clones.ind)
+clones.ind<-subset(clones.ind, CDR3_length_AA==7) #take only a subset of clones.ind (CDR3 sequences of 7 AA)
+dist1<-sequences.distance(sequences = clones.ind$unique_CDR3_sequences_AA, 
+     method = "levenshtein", divLength=TRUE)
+# Subset of output for 7AA sequences:
+dist1[[1]][1:5,1:5]
+```{r, echo=F, results='asis', warning=FALSE}
+data(clones.ind)
+clones.ind<-subset(clones.ind, CDR3_length_AA==7)
+dist1<-sequences.distance(sequences = clones.ind$unique_CDR3_sequences_AA, 
+     method = "levenshtein", divLength=TRUE)
+pandoc.table(dist1[[1]][1:5,1:5])
+
+```{r, echo=T, eval=F}
+# Example 2: 
+## Use all sequences with a length of 7 or 8 AA for cosine distance matrix:
+data(clones.allind)
+clones.allind<-subset(clones.allind, CDR3_length_AA %in% c(9,31)) #take only a subset of clones.ind (CDR3 sequences of 9 or 31 AA)
+dist2<-sequences.distance(sequences = clones.allind$unique_CDR3_sequences_AA, 
+     groups = clones.allind$individuals, method = "cosine", divLength=FALSE)
+# Subset of output:
+dist2[[1]][1:4,1:4]
+```{r, echo=F, results='asis', warning=FALSE}
+data(clones.allind)
+clones.allind<-subset(clones.allind, CDR3_length_AA %in% c(9,31))
+
+dist2<-sequences.distance(sequences = clones.allind$unique_CDR3_sequences_AA, 
+     groups = clones.allind$individuals, method = "cosine", divLength=FALSE)
+pandoc.table(dist2[[1]][1:4,1:4])
+```
+
+## Principal coordinate analysis on distance matrices
+Principal coordinate analysis can be performed on distance matrices. The function dist.PCoA() provides principal coordinate objects, like in 'ape::pcoa()', with an output as follows (taken from ape::pcoa):
+
+* correction: value of parameter and correction variable, if any
+* note: type of correction
+* values  : The eigenvalues and related information:
+    * Eigenvalues: all eigenvalues (positive, null, negative)
+    * Relative_eig: relative eigenvalues
+    * Corr_eig: corrected eigenvalues
+    * Rel_corr_eig: relative eigenvalues after Lingoes or Cailliez correction.
+    * Broken_stick: expected fractions of variance under the broken stick model.
+    * Cumul_eig: cumulative relative eigenvalues.
+    * Cum_corr_eig: cumulative corrected relative eigenvalues.
+    * Cumul_br_stick: cumulative broken stick fractions.
+* vectors: the principal coordinates with positive eigenvalues.
+* trace: the trace of the distance matrix. This is also the sum of all eigenvalues, positive and negative.
+* vectors.cor: the principal coordinates with positive eigenvalues from the distance matrix corrected using the method specified by parameter correction.
+* trace.cor: the trace of the corrected distance matrix. This is also the sum of its eigenvalues.
+
+The results can also be plotted, using 'plotDistPCoA()'. Input has to be the PCoA table from 'dist.PCoA()', a 'groups' data.frame and a pair of axes to be plotted. Optional arguments are names, plotCorrection (default: FALSE), title, plotLegend (default: FALSE) and PDF.
+
+```{r, echo=T, eval=T, results='asis', warning=FALSE}
+# Example for gene usage data:
+data(vgenes) 
+vgenes<-vgenes[,1:10] # include only genes 1-10
+gu.dist<-geneUsage.distance(geneUsage.tab = vgenes, method = "bc")
+gu.pcoa<-dist.PCoA(dist.tab = gu.dist, correction = "cailliez")
+```{r, results='markup'}
+str(gu.pcoa) # a PCoA object
+```{r, results='asis', fig.align='center',  fig.height=4.5, fig.width=7}
+# Example of a 'groups' data.frame: in the case, there are two groups:
+groups.vec<-cbind(rownames(vgenes),c(rep("group1",5),rep("group2",5)))
+colnames(groups.vec)<-c("Sample","Group")
+pandoc.table(groups.vec)
+
+plotDistPCoA(pcoa.tab = gu.pcoa, groups= groups.vec, axes = c(1,2), 
+             names = rownames(vgenes), plotLegend = TRUE)
+```
+
+```{r, echo=T, eval=T, fig.align='center', fig.height=6.5, fig.width=7, results='asis', warning=FALSE}
+# Example for sequence data, divided into subsets of the same length:
+data(clones.ind)
+clones.ind<-subset(clones.ind, CDR3_length_AA %in% c(7:10)) # include only CDR3 sequences of 7-10 AA
+seq.dist<-sequences.distance(sequences = clones.ind$unique_CDR3_sequences_AA, 
+     method = "levenshtein", divLength=T)
+seq.pcoa<-dist.PCoA(dist.tab = seq.dist, correction = "none")
+
+# Example of a 'groups' data.frame: 
+## in the case, there are no groups (all samples have the same group):
+groups.vec<-unlist(apply(data.frame(clones.ind$unique_CDR3_sequences_AA),1,
+                         function(x){strsplit(x,split=", ")[[1]]}))
+groups.vec<-cbind(groups.vec, 1)
+
+plotDistPCoA(pcoa.tab = seq.pcoa, groups=groups.vec, axes = c(1,2), 
+             plotCorrection = FALSE, 
+             title = 'PCoA for sequences of length 7-10 AA', plotLegend=FALSE)    
 ```

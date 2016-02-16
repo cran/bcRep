@@ -13,7 +13,8 @@ sequences.functionality(data = NULL, relativeValues=TRUE, ...)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
-     Vector containing functionality information, f.e. taken from IMGT/HighV-QUEST output, f.e. 1_Summary(...).txt, 3_Nt-sequences(...).txt, 5_AA-sequences(...).txt
+     Vector containing functionality information, e.g. taken from IMGT/HighV-QUEST output,    
+     e.g. 1_Summary(...).txt, 3_Nt-sequences(...).txt, 5_AA-sequences(...).txt
 }
   \item{relativeValues}{
      Shall relative or absolute values be returned? (default: TRUE)
@@ -22,7 +23,11 @@ sequences.functionality(data = NULL, relativeValues=TRUE, ...)
 
 }
 }
+\details{
+Productive sequences: include no stop codon and are in-frame
 
+Unproductive sequences: include a stop codon and/or are out-of-frame
+}
 \value{
 Output is a data frame including proportions of productive and unproductive sequences, as well as proportion of sequences with unknown functionality.
 }

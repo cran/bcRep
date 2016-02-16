@@ -1,7 +1,7 @@
 ## Julia Bischof
 ## 10-09-2015
 
-library(vegan)
+#library(vegan)
 
 trueDiversity<-function(sequences=NULL,aaDistribution.tab=NULL,order=c(0, 1, 2)){
   

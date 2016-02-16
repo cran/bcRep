@@ -1,7 +1,7 @@
 ## Julia Bischof
 ## 10-09-2015
 
-library(gplots)
+#library(gplots)
 
 plotGeneComb<-function(geneComb.tab=NULL,color=c("gray97","darkblue"), withNA=TRUE,title=NULL, PDF=NULL,...){
   if(length(geneComb.tab)==0){

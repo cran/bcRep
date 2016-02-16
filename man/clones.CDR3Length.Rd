@@ -5,7 +5,7 @@
 CDR3 length distribution of clones
 }
 \description{
-This function gives information about the CDR3 length distribution of clones. Results can returned as relative or absolute values and be visualized as a barplot, using \code{plotClonesCDR3Length}.
+This function gives information about the CDR3 length distribution of clones. Results can be returned as relative or absolute values and be visualized as a barplot, using \code{plotClonesCDR3Length}.
 }
 \usage{
 clones.CDR3Length(CDR3Length = NULL, functionality = NULL, junctionFr = NULL, 
@@ -43,10 +43,10 @@ plotClonesCDR3Length(CDR3Length=NULL,functionality=NULL, junctionFr=NULL,
 }
 }
 \details{
-The \code{PDF} character string should be only the project name (without ".pdf"). For only CDR3 length, a plot called "PDF"_CDR3-length.pdf will be saved to your working direktory. 
+The \code{PDF} character string should be only the project name (without ".pdf"). For simple analysis of the CDR3 length, a plot called "PDF"_CDR3-length.pdf will be saved to the working direktory. 
 
-If \code{CDR3Length.Func = T} a figure called "PDF"_CDR3-length_vs_Functionality.pdf will be saved and 
-if \code{CDR3Length.JunctionFr = T} a figure called "PDF"_CDR3-length_vs_Junction-frame.pdf will be saved.
+If \code{CDR3Length.Func = T} a figure containing CDR3 length vs. functionality is saved (called "PDF"_CDR3-length_vs_Functionality.pdf) and 
+if \code{CDR3Length.JunctionFr = T} a figure containing CDR3 length vs. junction fram usage (called "PDF"_CDR3-length_vs_Junction-frame.pdf) is saved.
 }
 \value{
 Output is a list containing
@@ -63,10 +63,10 @@ Julia Bischof
  \code{\link{clones.CDR3Length}}, \code{\link{plotClonesCDR3Length}}, \code{\link{plotClonesCopyNumber}}, \code{\link{geneUsage}}
 }
 \examples{
-data(clones.ind)
+\dontrun{data(clones.ind)
 clones.CDR3Length(CDR3Length = clones.ind$CDR3_length_AA, 
      functionality = clones.ind$Functionality_all_sequences)
-\dontrun{plotClonesCDR3Length(CDR3Length = clones.ind$CDR3_length_AA, 
+plotClonesCDR3Length(CDR3Length = clones.ind$CDR3_length_AA, 
      functionality = clones.ind$Functionality_all_sequences)}
 }
 

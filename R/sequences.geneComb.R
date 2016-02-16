@@ -1,8 +1,8 @@
 ## Julia Bischof
 ## 10-09-2015
 
-library(doParallel)
-library(parallel)
+#library(doParallel)
+#library(parallel)
 
 sequences.geneComb<-function(family1=NULL,family2=NULL,level=c("subgroup", "gene", "allele"),abundance=c("relative", "absolute"),nrCores=1){
   if(length(family1)==0){

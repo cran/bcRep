@@ -5,7 +5,7 @@
 Compare gene usage of different samples
 }
 \description{
-This function compares the gene usage of different samples. Analysis can be done for subgroups, genes and alleles. Values can be returned as relative or absoluet abundance. Parallel processing is possible.
+This function compares the gene usage of different samples. Analysis can be done for subgroups, genes and alleles (see Details). Values can be returned as relative or absolute abundance. Parallel processing is possible.
 }
 \usage{
 compare.geneUsage(gene.list = NULL, level = c("subgroup", "gene", "allele"), 
@@ -45,15 +45,15 @@ plotCompareGeneUsage(comp.tab = NULL, color = c("gray97", "darkblue"),
 }
 }
 \details{
-Gene usage analysis will be done for each sample. Vector of genes will be analyzed for one of the levels \code{subgroup} (f.e. IGHV1), \code{gene} (f.e. IGHV1-1) or \code{allele} (f.e. IGHV1-1*2).
+Gene usage analysis will be done for each sample. Vector of genes will be analyzed for one of the levels \code{subgroup} (e.g. IGHV1), \code{gene} (e.g. IGHV1-1) or \code{allele} (e.g. IGHV1-1*2).
 
 
 The \code{PDF} character string should be only the project name (without ".pdf"). 
 
-A figure called "PDF"_Comparison_Gene-usage.pdf will be saved to your working directory.
+A figure called "PDF"_Comparison_Gene-usage.pdf will be saved to the working directory.
 }
 \value{
-Output is a data frame containing gene usage of each sample.
+Output is a data frame containing absolue or relative values of gene usage of each sample.
 }
 \author{
 Julia Bischof

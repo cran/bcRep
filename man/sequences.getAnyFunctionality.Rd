@@ -24,12 +24,16 @@ sequences.getUnproductives(data = NULL)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
-     IMGT/HighV-QUEST output file with functionality information, f.e. 1_Summary().txt, 3_Nt-sequences.txt, ...
+     IMGT/HighV-QUEST output file with functionality information, e.g. 1_Summary().txt, 3_Nt-sequences.txt, ...
 }
 }
+\details{
+Productive sequences: include no stop codon and are in-frame
 
+Unproductive sequences: include a stop codon and/or are out-of-frame
+}
 \value{
-Output is a data frame with the same columns like the input, but filtered for only productive, unproductive or sequences having any functionality information.
+Output is a data frame with the same columns like the input, but filtered for only productive or unproductive sequences or sequences having any functionality information.
 }
 \references{
 IMGT/LIGM-DB labels: \url{http://www.imgt.org/ligmdb/label}
