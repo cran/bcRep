@@ -1,7 +1,7 @@
 <!-- rmarkdown v1 
 %\VignetteIndexEntry{bcRep: Advanced Analysis of B Cell Receptor RepertoireData},  \n
           %\VignetteEngine{knitr::rmarkdown}  , \n
-          %\VignetteDepends{bcRep, pander, parallel, doParallel, vegan, ape, stringdist,gplots, ineq, foreach, knitr}, \n
+          %\VignetteDepends{bcRep, pander, parallel, doParallel, vegan, ape, stringdist,gplots, ineq, foreach, knitr, plotrix}, \n
           %\VignetteEncoding{UTF-8}, \n
           %\usepackage[utf8]{inputnc}
 -->
@@ -32,7 +32,7 @@ Using this package IMGT/HighV-QUEST output files can be analysed, f.e. functiona
 * Descriptive statistics: functionality and junction frame usage; CDR3 length distribution
 * Clonotype analysis: cluster sequences to clones
 * Gene usage analysis
-* Basic mutation analysis
+* Basic mutation analysis; proportions of amino acid mutations; proportions of bases nearby mutations
 * Amino acid distribution and diversity: amino acid distribution, richness, Shannon index, inverse Shannon index, Gini index
 * Comparison of different samples: gene usage, amino acid distribution, diversity, clones
 * Distances and Principal coordinate analysis on gene usage and sequence data
@@ -257,6 +257,48 @@ pandoc.table(head(V.mutation$Number_of_mutations))
 
 ```{r, echo=F, results='asis'}
 pandoc.table(V.mutation$Junction_frame)
+```
+
+
+
+#### Proportions of amino acid mutations
+Proportions of amino acid mutations can be calculated using `sequences.mutation.AA()`. This function calculates the porportion of mutations from amino acid x to amino acid y. The original amino acids are in rows, the mutated one in columns.
+
+`plotSequencesMutationAA()` visualizes the 20 x 20 data frame in some kind of heatmap, showing groups of proportions. Furthermore changes of amino acid characteristics, like hydropathy, volume or chemical can be shown (orange dots). Figures can be saved as PDF.
+
+```{r, echo=F}
+library(bcRep)
+library(pander)
+
+```{r, echo=T,results='asis', fig.align='center', fig.height=5, fig.width=9}
+# Example:
+
+data(mutationtab)
+V.AAmut<-sequences.mutation.AA(mutationtab = mutationtab, sequence = "V")
+plotSequencesMutationAA(mutationAAtab = V.AAmut, showChange = "hydropathy")
+
+```
+
+
+
+#### Proportions of bases nearby mutations
+Proportions of base distributions nearby mutationscan be calculated using `sequences.mutation.base()`. This function calculates the porportion of a, c, g or t next to mutations from position -3 to +3. Parallel processing can be used for large datasets.
+
+`plotSequencesMutationAA()` visualizes base proportions nearby mutations. Barplots are given for each base.
+
+
+```{r, echo=F}
+library(bcRep)
+library(pander)
+
+```{r, echo=T,results='asis', fig.align='center', fig.height=7, fig.width=9}
+# Example:
+
+data(mutationtab)
+data(summarytab)
+V.BaseMut<-sequences.mutation.base(mutationtab = mutationtab, summarytab = summarytab, sequence = "V", nrCores=1)
+plotSequencesMutationBase(mutationBaseTab = V.BaseMut)
+
 ```
 
 ## Functions for a set of clones

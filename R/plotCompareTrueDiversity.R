@@ -35,7 +35,7 @@ plotCompareTrueDiversity<-function(comp.tab=NULL, colors=NULL, title=NULL, PDF=N
   }
   
   par(mfrow=c(ceiling(sqrt((length(uniseqlength)+nrleg+1))),ceiling(sqrt((length(uniseqlength)+nrleg+1)))),
-      mar=c(3,4,4,2),oma=c(2,2,6,3))
+      mar=c(3,4,7,2),oma=c(2,2,10,3))
   maxy<-round(max(unlist(comp.tab),na.rm=T),0)+1
   for(i in 1:length(uniseqlength)){
     plot(1,1,col="white",xlab=" ",xaxt="n",main=uniseqlength[i],ylim=c(0,maxy),cex=0.8, ylab=" ", 

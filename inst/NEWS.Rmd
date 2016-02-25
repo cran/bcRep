@@ -12,6 +12,23 @@ output:
   word_document: default
 ---
 
+## Changes in version 1.3 (2016-02-25)
+
+### BUG FIXES
+
+     * readIMGT(): eliminated errors
+     * clones(): eliminated error message when no clone was found
+     * geneUsage(): eliminated error for JH subgroup usage
+    
+
+### NEW FEATURES AND FUNCTIONS
+      
+     * sequences.mutation.AA() added (proportions of amino acid mutations)
+     * plotSequencesMutationAA() added
+     * sequences.mutation.base() added (proportions of bases around mutations)
+     * plotSequencesMutationBase() added
+
+
 ## Changes in version 1.3 (2016-02-15)
 
 ### BUG FIXES

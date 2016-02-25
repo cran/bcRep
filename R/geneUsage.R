@@ -27,7 +27,7 @@ geneUsage<-function(genes=NULL,level=c("subgroup", "gene", "allele"),functionali
     genelist<-unlist(apply(data.frame(genes),1,function(x){strsplit(x,split=" |,|[.]|;|[|]|_|/")[[1]]}))
     genelist<-sort(genelist[grep(family,genelist)])
     if(level=="subgroup"){
-      genelist<-sort(unlist(apply(data.frame(genelist),1,function(x){strsplit(x,split="S|-")[[1]][1]})))
+      genelist<-sort(unlist(apply(data.frame(genelist),1,function(x){strsplit(x,split="S|-|[*]")[[1]][1]})))
     }else if(level=="gene"){
       genelist<-sort(unlist(apply(data.frame(genelist),1,function(x){strsplit(x,split="[*]")[[1]][1]})))
     }

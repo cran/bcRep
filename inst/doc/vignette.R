@@ -135,6 +135,33 @@ pandoc.table(head(V.mutation$Number_of_mutations))
 ## ---- echo=F, results='asis'---------------------------------------------
 pandoc.table(V.mutation$Junction_frame)
 
+## ---- echo=F-------------------------------------------------------------
+library(bcRep)
+library(pander)
+
+
+## ---- echo=T,results='asis', fig.align='center', fig.height=5, fig.width=9----
+# Example:
+
+data(mutationtab)
+V.AAmut<-sequences.mutation.AA(mutationtab = mutationtab, sequence = "V")
+plotSequencesMutationAA(mutationAAtab = V.AAmut, showChange = "hydropathy")
+
+
+## ---- echo=F-------------------------------------------------------------
+library(bcRep)
+library(pander)
+
+
+## ---- echo=T,results='asis', fig.align='center', fig.height=7, fig.width=9----
+# Example:
+
+data(mutationtab)
+data(summarytab)
+V.BaseMut<-sequences.mutation.base(mutationtab = mutationtab, summarytab = summarytab, sequence = "V", nrCores=1)
+plotSequencesMutationBase(mutationBaseTab = V.BaseMut)
+
+
 ## ---- eval=FALSE---------------------------------------------------------
 #  # Example:
 #  data(aaseqtab)

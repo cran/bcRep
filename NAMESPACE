@@ -10,9 +10,11 @@ importFrom("graphics", "abline", "axis", "barplot", "boxplot",
            "legend", "mtext", "par", "plot", "points", "text", "title")
 importFrom("utils", "adist", "read.table")
 importFrom("grDevices", "rainbow")
-importFrom("graphics", "lines")
+importFrom("graphics", "lines", rect)
 importFrom("stats", "quantile")
 importFrom("ape", pcoa)
 importFrom("proxy", dist)
 importFrom("stringdist", seq_distmatrix)
 importFrom("stats", "as.dist")
+importFrom("plotrix", draw.circle)
+

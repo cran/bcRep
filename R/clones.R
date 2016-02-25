@@ -230,7 +230,7 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
   
   stopCluster(cl)
   
-  if(length(clonRel)>0){
+  if(is.data.frame(clonRel) && nrow(clonRel)>0){
     colnames(clonRel)<-c("unique_CDR3_sequences_AA",
                          "CDR3_length_AA",
                          "number_of_unique_sequences",
@@ -256,8 +256,10 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
       clonRel<-clonRel[-intersect(which(clonRel[,"total_number_of_sequences"]==1),
                                   which(clonRel[,"sequence_count_per_CDR3"]==1)),]
     }
+  }else{
+    clonRel<-NULL
+    cat("... no clones\n")
   } 
-  return(data.frame(clonRel,check.names=F,stringsAsFactors = F))
-  
+  return(data.frame(clonRel,check.names=F,stringsAsFactors = F))  
 }
 
