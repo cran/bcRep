@@ -25,10 +25,10 @@ sequences.geneComb<-function(family1=NULL,family2=NULL,level=c("subgroup", "gene
   registerDoParallel(cl)
 
     
-  if(length(grep(" ",(family1[1])))==0){
-    familyname1<-substr(family1[1],1,4)
+  if(length(grep(" ",(family1[which(family1!="")[1]])))==0){
+    familyname1<-substr(family1[which(family1!="")[1]],1,4)
   }else{
-    familyname1<-substr(strsplit(family1[1],split=" ")[[1]][2],1,4)
+    familyname1<-substr(strsplit(family1[which(family1!="")[1]],split=" ")[[1]][2],1,4)
   }
     list1<-unique(unlist(apply(data.frame(family1),1,function(x){strsplit(x,split=" ")[[1]]})))
     list1<-unique(list1[grep(familyname1,list1)])
@@ -38,10 +38,10 @@ sequences.geneComb<-function(family1=NULL,family2=NULL,level=c("subgroup", "gene
       list1<-unique(unlist(apply(data.frame(list1),1,function(x){strsplit(x,split="S|-|[*]")[[1]][1]})))
     }
   list1<-sort(list1)
-  if(length(grep(" ",(family2[1])))==0){
-    familyname2<-substr(family2[1],1,4)
+  if(length(grep(" ",(family2[which(family2!="")[1]])))==0){
+    familyname2<-substr(family2[which(family2!="")[1]],1,4)
   }else{
-    familyname2<-substr(strsplit(family2[1],split=" ")[[1]][2],1,4)
+    familyname2<-substr(strsplit(family2[which(family2!="")[1]],split=" ")[[1]][2],1,4)
   }
   list2<-unique(unlist(apply(data.frame(family2),1,function(x){strsplit(x,split=" ")[[1]]})))
     list2<-unique(list2[grep(familyname2,list2)])

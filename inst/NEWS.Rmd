@@ -12,6 +12,14 @@ output:
   word_document: default
 ---
 
+## Changes in version 1.3.2 (2016-03-17)
+
+### BUG FIXES
+
+     * sequences.geneComb(): eliminated errors
+     * compare.geneUsage(): eliminated errors
+     
+
 ## Changes in version 1.3 (2016-02-25)
 
 ### BUG FIXES

@@ -1,4 +1,4 @@
-7d7ee463c27b49c101cd260041873dc4 *DESCRIPTION
+a89918601dce35c66d4cd84d2fe1f25a *DESCRIPTION
 b9a2ab78bfe0994101395caac0834440 *NAMESPACE
 086765a73351b67635ad3ad3c0137a3d *R/aaDistribution.R
 02591f6920fa502319662212c9bf137a *R/clones.CDR3Length.R
@@ -11,7 +11,7 @@ ce1fb501f22c5824856d79bcf81e2763 *R/clones.filterJunctionFrame.R
 794c4cb0a9ed7038af3b04458a7b7db6 *R/clones.shared.summary.R
 8f80b573fdacf334060f7267a9003e3d *R/combineIMGT.R
 c0b6c2f67471d739a37697f4f5e884ca *R/compare.aaDistribution.R
-02731feb98878fe009990fc1d6d54d9d *R/compare.geneUsage.R
+1bba1586c7f1a3afd6d45043ab431e4d *R/compare.geneUsage.R
 f39abfda6bae838b585b821690e1cab9 *R/compare.trueDiversity.R
 7bcf88dab99161f4ddba95100df32403 *R/dist.PCoA.R
 ca6df1a8fdc6505c95542d9f091e2f7c *R/geneUsage.R
@@ -31,7 +31,7 @@ e2cf2bc6eb465fcfeee754f56baab4e2 *R/plotSequencesMutationAA.R
 a074d0f513530e7f2bf3c0647e09fd97 *R/readIMGT.R
 6723695afe8b2d97833cbf7fc5aa9985 *R/sequences.distance.R
 0c1ff0f17b93dcd9a72961c83bebd09b *R/sequences.functionality.R
-e85c7af9342099ba63d9b9a0c522c5a2 *R/sequences.geneComb.R
+bce262b8280970bd2063ef218bf51e4f *R/sequences.geneComb.R
 e9d4620b65029ad38e73261095c51f4a *R/sequences.getAnyFunctionality.R
 6aba60deaf1ec9e212073d8d3627c82e *R/sequences.getAnyJunctionFrame.R
 a6c5b5692d13ff76d254c4807b275b6a *R/sequences.getInFrames.R
@@ -53,8 +53,8 @@ a402a38483c05bf013075ca27d5e944a *data/aaseqtab2.rda
 b50ce7d213452cf4ef47fa69a5b866b0 *data/ntseqtab.rda
 2ffdac7936f94a6c91f54652018cd290 *data/summarytab.rda
 c03cd42fde754f88841cee5f39f21c80 *data/vgenes.rda
-3321516ad57154b1c66ab4503cbe371c *inst/NEWS.Rmd
-a2e47efb55d446330baf4e48a222945d *inst/doc/NEWS.pdf
+2c403ec8f9996113860aaae5d9d2e96d *inst/NEWS.Rmd
+11b3cda46b54d9209d6c343ab1323337 *inst/doc/NEWS.pdf
 223f5c271106364cfd1d3dcdc15de93e *inst/doc/vignette.R
 c1352a8cad2fe795f3b8d6145520f39b *inst/doc/vignette.Rmd
 dda5d891e575beefd4ca87dcceebb6f7 *inst/doc/vignette.html
