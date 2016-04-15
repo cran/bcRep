@@ -15,7 +15,7 @@ This function provides information about the true diversity. Richness or diversi
 \usage{
 trueDiversity(sequences = NULL, aaDistribution.tab = NULL, order = c(0,1,2))
 
-plotTrueDiversity(trueDiversity.tab=NULL,color="black", PDF=NULL,...)
+plotTrueDiversity(trueDiversity.tab=NULL, mean.plot=T, color="black", PDF=NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -31,14 +31,14 @@ plotTrueDiversity(trueDiversity.tab=NULL,color="black", PDF=NULL,...)
 \item{trueDiversity.tab}{
 	Output of function \code{trueDiversity()}
 }
+ \item{mean.plot}{
+     Includes only one figure with mean diversities (default = T)
+}
 \item{color}{
 	color used for plot (default: black)
 }
 \item{PDF}{
      PDF project name (see Details)
-}
- \item{...}{
-
 }
 }
 \details{
@@ -48,7 +48,7 @@ Order 1: Exponential function of Shannon entropy using the natural logarithm (we
 Order 2: Inverse Simpson entropy (weights all amino acids by their frequency, but weights are given more to abundant amino acids).    
 These indices are very similar (Hill, 1973). For example the exponential function of Shannon index is linearly related to inverse Simpson.
 
-\code{plotTrueDiversity} returns an image with diversity plots for each length. Each plot contains the richness or diversity (y-axis) for each position (x-axis). 
+\code{plotTrueDiversity} returns an image with diversity plots for each length, if \code{mean.plot = F}. In the case of \code{mean.plot = T}, only one figure is returned, where mean diversity values for each sequence length are plotted. Each plot contains the richness or diversity (y-axis) for each position (x-axis). 
 
 The \code{PDF} character string should be only the project name (without ".pdf"). A figure called "PDF"_True-diversity_q"order".pdf will be saved to the working directory. 
 }

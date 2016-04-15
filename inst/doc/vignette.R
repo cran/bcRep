@@ -52,7 +52,10 @@ pandoc.table(trueDiv$True_diversity$'sequence length = 5')
 # True diversity for sequences of amino acid length 14-17: 
 trueDiv.part<-list(trueDiv$True_diversity_order, trueDiv$True_diversity[13:16])
 names(trueDiv.part)<-names(trueDiv)
-plotTrueDiversity(trueDiversity.tab=trueDiv.part,color="darkblue", PDF=NULL)
+plotTrueDiversity(trueDiversity.tab=trueDiv.part, mean.plot = F,color="darkblue", PDF=NULL)
+
+## ---- eval=T, fig.width = 7, fig.height = 5, fig.align='center'----------
+plotTrueDiversity(trueDiversity.tab=trueDiv, mean.plot = T,color="darkblue", PDF=NULL)
 
 ## ---- echo=F-------------------------------------------------------------
 library(bcRep)
@@ -344,7 +347,9 @@ trueDiv.comp.part<-list(trueDiv.comp$True_diversity_order,
                         trueDiv.comp$Individual1[grepindex1],
                         trueDiv.comp$Individual2[grepindex2])
 names(trueDiv.comp.part)<-names(trueDiv.comp)
-plotCompareTrueDiversity(comp.tab = trueDiv.comp.part, colors=c("darkblue","darkred"), 
+plotCompareTrueDiversity(comp.tab = trueDiv.comp.part, mean.plot = F, colors=c("darkblue","darkred"), 
+                         PDF = NULL)
+plotCompareTrueDiversity(comp.tab = trueDiv.comp, mean.plot = T, colors = c("darkblue","darkred"), 
                          PDF = NULL)
 
 ## ---- echo=FALSE---------------------------------------------------------

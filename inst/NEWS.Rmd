@@ -12,6 +12,19 @@ output:
   word_document: default
 ---
 
+## Changes in version 1.3.3 (2016-04-15)
+
+### BUG FIXES
+
+     * clones.filterSize(): eliminated errors
+     * clones.shared(): eliminated errors
+     * clones.compareGeneUsage(): eliminated errors
+
+### NEW FEATURES AND FUNCTIONS
+
+     * plotTrueDiversity(): added option to plot mean diversities
+     * plotCompareTrueDiversity(): added option to plot mean diversities
+     
 ## Changes in version 1.3.2 (2016-03-17)
 
 ### BUG FIXES

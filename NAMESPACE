@@ -17,4 +17,5 @@ importFrom("proxy", dist)
 importFrom("stringdist", seq_distmatrix)
 importFrom("stats", "as.dist")
 importFrom("plotrix", draw.circle)
-
+importFrom("graphics", "arrows")
+importFrom("stats", "sd")

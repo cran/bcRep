@@ -15,7 +15,7 @@ clones.filterSize<-function(clones.tab=NULL, column=NULL, number=NULL, propOfClo
   if(length(method)!=1 || !(method %in% c("two.tailed","upper.tail","lower.tail"))){
     stop("--> Method (two.tailed,upper.tail,lower.tail) is missing")
   }
-  clones.tab<-clones.tab[order(clones.tab[,column],decreasing = T),]
+  clones.tab<-clones.tab[order(as.numeric(clones.tab[,column]),decreasing = T),]
   
   if(length(number)>0){
     if(method=="two.tailed"){
@@ -39,7 +39,7 @@ clones.filterSize<-function(clones.tab=NULL, column=NULL, number=NULL, propOfClo
     }
   }
   if(length(propOfSequences)>0){
-    tr<-as.numeric(sum(clones.tab[,column],na.rm=T)*propOfSequences)
+    tr<-as.numeric(sum(as.numeric(clones.tab[,column]),na.rm=T)*propOfSequences)
     if(method=="two.tailed"){
       clones.up<-clones.tab[which(clones.tab[,column]>tr),]
       clones.low<-clones.tab[which(clones.tab[,column]<=tr),]

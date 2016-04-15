@@ -110,7 +110,7 @@ plotAADistribution(aaDistribution.tab=aadistr.part, plotAADistr=TRUE,
 Diversity of sequences and clones can be analyzed using `trueDiversity()` or `clones.giniIndex()`.
 
 ### True diversity
-Using `trueDiversity()` richness or diversity of sequences with the same length can be analyzed. Basically diversity of amino acids at each position is calculated. True diversity can be measured for orders q = 0, 1 or 2. `plotTrueDiversity()` can be used for visualization.
+Using `trueDiversity()` richness or diversity of sequences with the same length can be analyzed. Basically diversity of amino acids at each position is calculated. True diversity can be measured for orders q = 0, 1 or 2. `plotTrueDiversity()` can be used for visualization. If `mean.plot = F`, a figure for each sequence length including diversity per position will be returned. If `mean.plot = T` only one figure with mean diversity values for all sequences with the same length will be returned.
 
 Order 0: Richness (in this case it represents number of different amino acids per position).
 
@@ -141,7 +141,9 @@ pandoc.table(trueDiv$True_diversity$'sequence length = 5')
 # True diversity for sequences of amino acid length 14-17: 
 trueDiv.part<-list(trueDiv$True_diversity_order, trueDiv$True_diversity[13:16])
 names(trueDiv.part)<-names(trueDiv)
-plotTrueDiversity(trueDiversity.tab=trueDiv.part,color="darkblue", PDF=NULL)
+plotTrueDiversity(trueDiversity.tab=trueDiv.part, mean.plot = F,color="darkblue", PDF=NULL)
+```{r, eval=T, fig.width = 7, fig.height = 5, fig.align='center'}
+plotTrueDiversity(trueDiversity.tab=trueDiv, mean.plot = T,color="darkblue", PDF=NULL)
 ```
 
 ### Gini index
@@ -529,7 +531,7 @@ Richness and diversity can be compared using `compare.trueDiversity()`. Input ca
 
 The output is a list, containing richness or diversity indices for each sequence length and each individual.
 
-Results can be visualized using `plotCompareTrueDiversity()` (optional saved as PDF in working directory). A plot will be returned, with one figure for each sequence length. Each figure contains the sequence position on the x-axis and the richness/diversity index on the y-axis. If no colors are specified, `rainbow()` will be used.
+Results can be visualized using `plotCompareTrueDiversity()` (optional saved as PDF in working directory). A plot will be returned, with one figure for each sequence length, if `mean.plot = F`. If `mean.plot = T` only one figure with mean diversity values for all sequences with the same length will be returned. Each figure contains the sequence position on the x-axis and the richness/diversity index on the y-axis. If no colors are specified, `rainbow()` will be used.
 
 ```{r, echo=FALSE}
 library(bcRep)
@@ -548,7 +550,9 @@ trueDiv.comp.part<-list(trueDiv.comp$True_diversity_order,
                         trueDiv.comp$Individual1[grepindex1],
                         trueDiv.comp$Individual2[grepindex2])
 names(trueDiv.comp.part)<-names(trueDiv.comp)
-plotCompareTrueDiversity(comp.tab = trueDiv.comp.part, colors=c("darkblue","darkred"), 
+plotCompareTrueDiversity(comp.tab = trueDiv.comp.part, mean.plot = F, colors=c("darkblue","darkred"), 
+                         PDF = NULL)
+plotCompareTrueDiversity(comp.tab = trueDiv.comp, mean.plot = T, colors = c("darkblue","darkred"), 
                          PDF = NULL)
 ```
 

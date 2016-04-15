@@ -20,6 +20,10 @@ compare.geneUsage<-function(gene.list=NULL,level=c("subgroup","gene","allele"),a
     stop(paste("--> nrCores is higher than available number of cores (only ",as.numeric(detectCores())," cores available)",sep=""))
   }
   
+  if(is.factor(gene.list[[1]])==T){
+    gene.list<-lapply(gene.list,function(x){as.vector(x)})
+  }
+  
   cl<-makeCluster(nrCores)
   registerDoParallel(cl)
 
@@ -53,7 +57,7 @@ compare.geneUsage<-function(gene.list=NULL,level=c("subgroup","gene","allele"),a
   
   comp.tab<-do.call(rbind.data.frame, comp.list)
   comp.tab<-comp.tab[order(comp.tab[,1]),]
-  comp.tab<-comp.tab[,-1]
+  comp.tab<-data.frame(comp.tab[,-1])
   colnames(comp.tab)<-genes.all
   if(length(names)==length(gene.list)){
     rownames(comp.tab)<-names

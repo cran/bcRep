@@ -34,6 +34,7 @@ clones.shared<-function(clones.tab=NULL,identity=0.85,useJ=TRUE,dispD=TRUE,dispC
   sharedclone.temp<-vector()
   i<-NULL
   clonelist<-foreach(i=1:length(uniCDR3length)) %dopar%{
+    #for(i in 1:length(uniCDR3length)){
     #print(paste("... Analyzing clone with CDR3 length = ",uniCDR3length[i]," AA (",i,"/",length(uniCDR3length),")",sep=""))
     CDR3.index<-which(clones.tab$CDR3_length_AA==uniCDR3length[i])
     if(length(unique(CDR3.index))>1){
@@ -44,6 +45,7 @@ clones.shared<-function(clones.tab=NULL,identity=0.85,useJ=TRUE,dispD=TRUE,dispC
              J.index<-which(clones.tab$J_gene==clones.uniJ.gene[j])
              CDR3VJ.index<-intersect(intersect(V.index,J.index), CDR3.index)
             if(length(CDR3VJ.index)>0){
+              #cat(clones.uniV.gene[v],", ", clones.uniJ.gene[j],"... ")
               tr<-floor(uniCDR3length[i]*(1-as.numeric(identity)))
               CDR3.adist.temp<-unlist(lapply(clones.tab$unique_CDR3_sequences_AA[CDR3VJ.index],function(x){strsplit(x,split=" |,|;|_|-|[|]")[[1]]}))
               CDR3.adist<-unique(unlist(lapply(clones.tab$unique_CDR3_sequences_AA[CDR3VJ.index],function(x){strsplit(x,split=" |,|;|_|-|[|]")[[1]]})))
@@ -53,16 +55,16 @@ clones.shared<-function(clones.tab=NULL,identity=0.85,useJ=TRUE,dispD=TRUE,dispC
                 a.dist<-as.logical(adist(CDR3.adist[a], CDR3.adist)<=tr)
                 a.dist[a]<-NA
                 clones.tab.new<-vector()
-                grepCDR3<-grep(gsub("[*]","-",do.call(paste, c(as.list(as.character(unique(CDR3.adist[c(a,which(a.dist==T))]))), sep="|"))),gsub("[*]","-",CDR3.adist.temp),perl=T)
+                grepCDR3<-grep(gsub("[*]","-",do.call(paste, c(as.list(unlist(apply(expand.grid(c(" ","^"),as.character(unique(CDR3.adist[c(a,which(a.dist==T))])), c(",","$")),1,paste, collapse=""))), sep="|"))),gsub("[*]","-",CDR3.adist.temp),perl=T)
                 if(length(which(a.dist==T))>0 && length(unique(ind.adist[grepCDR3]))>1){
                   #print(a)
-                  clones.tab.new<-clones.tab[grep(gsub("[*]","-",do.call(paste, c(as.list(as.character(unique(CDR3.adist[c(a,which(a.dist==T))]))), sep="|"))),gsub("[*]","-",clones.tab$unique_CDR3_sequences_AA),perl=T),]
+                  clones.tab.new<-clones.tab[grep(gsub("[*]","-",do.call(paste, c(as.list(unlist(apply(expand.grid(c(" ","^"),as.character(unique(CDR3.adist[c(a,which(a.dist==T))])), c(",","$")),1,paste, collapse=""))), sep="|"))),gsub("[*]","-",clones.tab$unique_CDR3_sequences_AA),perl=T),]
                   nrseq.temp<-vector()
                   cdr3temp<-unique(c(unlist(apply(data.frame(clones.tab.new$unique_CDR3_sequences_AA),1,function(x){strsplit(x, split=", ")[[1]]}))))
                   for(c in 1:length(cdr3temp)){
                     cdr3tempnr<-vector()
                     for(g in 1:length(unique(ind.adist[grepCDR3]))){
-                      inter<-intersect(grep(unique(ind.adist[grepCDR3])[g],clones.tab.new$samples),grep(gsub("[*]","_",cdr3temp[c]),gsub("[*]","_",clones.tab.new$all_CDR3_sequences_AA)))
+                      inter<-intersect(grep(unique(ind.adist[grepCDR3])[g],clones.tab.new$samples),grep(gsub("[*]","_",cdr3temp[c]),gsub("[*]","_",clones.tab.new$all_CDR3_sequences_AA), perl=T))
                       if(length(inter)==0){
                         cdr3tempnr<-c(cdr3tempnr, paste(unique(ind.adist[grepCDR3])[g], 0, sep=": "))
                       }else{
@@ -73,15 +75,15 @@ clones.shared<-function(clones.tab=NULL,identity=0.85,useJ=TRUE,dispD=TRUE,dispC
                   }
                   nrseq<-do.call(paste, c(as.list(as.character(nrseq.temp)), sep="; "))
                   if(length(clones.tab.new)>0 && length(unique(clones.tab.new[,1]))>1){
-                    print(paste(clones.uniV.gene[v], clones.uniJ.gene[j],a))
+                    #print(paste(clones.uniV.gene[v], clones.uniJ.gene[j],a))
                     sharedclone.temp<-rbind(sharedclone.temp,c(length(unique(clones.tab.new[,1])),
                                                                do.call(paste, c(as.list(as.character(unique(clones.tab.new[,1]))), sep="; ")),
-                                                               nchar(CDR3.adist[a]),
+                                                               uniCDR3length[i],                                                               
                                                                do.call(paste, c(as.list(as.character(unique(CDR3.adist[c(a,which(a.dist==T))]))), sep="; ")),
                                                                length(unique(CDR3.adist[c(a,which(a.dist==T))])),
                                                                nrseq,
-                                                                do.call(paste, c(as.list(as.character(clones.tab.new$unique_CDR3_sequences_AA)), sep="; ")),
-                                                               clones.uniV.gene[i],
+                                                               do.call(paste, c(as.list(as.character(clones.tab.new$unique_CDR3_sequences_AA)), sep="; ")),
+                                                               clones.uniV.gene[v],
                                                                if(useJ==T && length(clones.uniJ.gene[j])>0){do.call(paste, c(as.list(unique(clones.uniJ.gene[j])), sep=", "))}else if(useJ==T && length(clones.uniJ.gene[j])==0){"no J"}else{do.call(paste, c(as.list(unique(clones.tab.new$J_gene)), sep="; "))},
                                                                
                                                                if(dispD==T){do.call(paste, c(as.list(unique(clones.tab.new$D_gene)), sep="; "))},
@@ -118,9 +120,9 @@ clones.shared<-function(clones.tab=NULL,identity=0.85,useJ=TRUE,dispD=TRUE,dispC
             a.dist<-as.logical(adist(CDR3.adist[a], CDR3.adist)<=tr)
             a.dist[a]<-NA
             clones.tab.new<-vector()
-            grepCDR3<-grep(gsub("[*]","-",do.call(paste, c(as.list(as.character(unique(CDR3.adist[c(a,which(a.dist==T))]))), sep="|"))),gsub("[*]","-",CDR3.adist.temp),perl=T)
+            grepCDR3<-grep(gsub("[*]","-",do.call(paste, c(as.list(unlist(apply(expand.grid(c(" ","^"),as.character(unique(CDR3.adist[c(a,which(a.dist==T))])), c(",","$")),1,paste, collapse=""))), sep="|"))),gsub("[*]","-",CDR3.adist.temp),perl=T)
             if(length(which(a.dist==T))>0 && length(unique(ind.adist[grepCDR3]))>1){
-              clones.tab.new<-clones.tab[grep(gsub("[*]","-",do.call(paste, c(as.list(as.character(unique(CDR3.adist[c(a,which(a.dist==T))]))), sep="|"))),gsub("[*]","-",clones.tab$unique_CDR3_sequences_AA),perl=T),]
+              clones.tab.new<-clones.tab[grep(gsub("[*]","-",do.call(paste, c(as.list(unlist(apply(expand.grid(c(" ","^"),as.character(unique(CDR3.adist[c(a,which(a.dist==T))])), c(",","$")),1,paste, collapse=""))), sep="|"))),gsub("[*]","-",clones.tab$unique_CDR3_sequences_AA),perl=T),]
               nrseq.temp<-vector()
               cdr3temp<-unique(c(unlist(apply(data.frame(clones.tab.new$unique_CDR3_sequences_AA),1,function(x){strsplit(x, split=", ")[[1]]}))))
               for(c in 1:length(cdr3temp)){
@@ -139,12 +141,12 @@ clones.shared<-function(clones.tab=NULL,identity=0.85,useJ=TRUE,dispD=TRUE,dispC
               if(length(clones.tab.new)>0 && length(unique(clones.tab.new[,1]))>1){
                 sharedclone.temp<-rbind(sharedclone.temp,c(length(unique(clones.tab.new[,1])),
                                                            do.call(paste, c(as.list(as.character(unique(clones.tab.new[,1]))), sep="; ")),
-                                                           nchar(CDR3.adist[a]),
+                                                           uniCDR3length[i],                                                               
                                                            do.call(paste, c(as.list(as.character(unique(CDR3.adist[c(a,which(a.dist==T))]))), sep="; ")),
                                                            length(unique(CDR3.adist[c(a,which(a.dist==T))])),
                                                            nrseq,
                                                            do.call(paste, c(as.list(as.character(clones.tab.new$unique_CDR3_sequences_AA)), sep="; ")),
-                                                           clones.uniV.gene[i],
+                                                           clones.uniV.gene[v],
                                                            if(useJ==T && length(clones.uniJ.gene[j])>0){do.call(paste, c(as.list(unique(clones.uniJ.gene[j])), sep=", "))}else if(useJ==T && length(clones.uniJ.gene[j])==0){"no J"}else{do.call(paste, c(as.list(unique(clones.tab.new$J_gene)), sep="; "))},
                                                            
                                                            if(dispD==T){do.call(paste, c(as.list(unique(clones.tab.new$D_gene)), sep="; "))},
@@ -201,19 +203,6 @@ clones.shared<-function(clones.tab=NULL,identity=0.85,useJ=TRUE,dispD=TRUE,dispC
       
       sharedclone<-sharedclone[intersect(which(duplicated(sharedclone$samples)==F),which(duplicated(sharedclone$"shared_CDR3")==F)),]
       
-    #  if(nrow(sharedclone)>1){
-    #    sharedclone<-sharedclone[order(sharedclone$number_shared_CDR3),]
-    #    out<-vector()
-    #    for(i in 1:nrow(sharedclone)){
-    #      if(length(grep(gsub("[*]","-",sharedclone[i,"shared_CDR3"]),gsub("[*]","-",sharedclone[(i+1):nrow(sharedclone),"shared_CDR3"]),perl=T))>1 && length(unique(sharedclone$samples[grep(gsub("[*]","-",sharedclone[i,"shared_CDR3"]),gsub("[*]","-",sharedclone[(i+1):nrow(sharedclone),"shared_CDR3"]),perl=T)]))==1){
-    #        out<-c(out,i)
-    #      }
-    #    }
-    #    out<-unique(c(out,grep("NA",sharedclone[,"samples"])))
-    #    if(length(out)>0){
-    #      sharedclone<-sharedclone[-out,]
-    #    }
-    #  }
     }else{
       sharedclone<-vector()
     }

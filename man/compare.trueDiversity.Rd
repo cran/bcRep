@@ -11,7 +11,8 @@ This function compares the richness or diversity of different samples. Analysis 
 compare.trueDiversity(sequence.list = NULL, comp.aaDistribution.tab = NULL, 
      order = c(0, 1, 2), names = NULL, nrCores = 1)
 
-plotCompareTrueDiversity(comp.tab = NULL, colors = NULL, title = NULL, PDF = NULL)
+plotCompareTrueDiversity(comp.tab = NULL, mean.plot=T, colors = NULL, 
+    title = NULL, PDF = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -33,6 +34,9 @@ plotCompareTrueDiversity(comp.tab = NULL, colors = NULL, title = NULL, PDF = NUL
  \item{comp.tab}{
      Output tab from \code{compare.trueDiversity()}
 }
+ \item{mean.plot}{
+     Includes only one figure with mean diversities (default = T)
+}
   \item{colors}{
      Colors used for individuals (default: rainbow)
 }
@@ -52,7 +56,7 @@ Order 1: Exponential function of Shannon entropy using the natural logarithm (we
 Order 2: Inverse Simpson entropy (weights all amino acids by their frequency, but weights are given more to abundant amino acids).    
 These indices are very similar (Hill, 1973). For example the exponential function of Shannon index is linearly related to inverse Simpson.
 
-\code{plotCompareTrueDiversity} returns an image with diversity plots for each length. Each plot contains the richness or diversity (y-axis) for each position (x-axis). Individuals are color coded.
+\code{plotCompareTrueDiversity} returns an image with diversity plots for each length, if \code{mean.plot = F}. In the case of \code{mean.plot = T}, only one figure is returned, where mean diversity values for each sequence length are plotted. Each plot contains the richness or diversity (y-axis) for each position (x-axis). Individuals are color coded.
 
 The \code{PDF} character string should be only the project name (without ".pdf"). 
 
