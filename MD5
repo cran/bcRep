@@ -1,8 +1,8 @@
-6a4255909e1e9e86ae99fbc8c09371c3 *DESCRIPTION
+ed1701ed0d792cfbb75cfc8c86c0b0d2 *DESCRIPTION
 3ad4b5fd306472a41ae8bf11809f75ec *NAMESPACE
 086765a73351b67635ad3ad3c0137a3d *R/aaDistribution.R
 02591f6920fa502319662212c9bf137a *R/clones.CDR3Length.R
-ccda4dbe9a67a030f0455166de279564 *R/clones.R
+0bf9c16b753da4caf12121d3849fd03c *R/clones.R
 3cb2e1ccf626656319c7324ea5383e3f *R/clones.filterFunctionality.R
 ce1fb501f22c5824856d79bcf81e2763 *R/clones.filterJunctionFrame.R
 3079f715d2779e0a07ef125ccdc1fe57 *R/clones.filterSize.R
@@ -53,8 +53,8 @@ a402a38483c05bf013075ca27d5e944a *data/aaseqtab2.rda
 b50ce7d213452cf4ef47fa69a5b866b0 *data/ntseqtab.rda
 2ffdac7936f94a6c91f54652018cd290 *data/summarytab.rda
 c03cd42fde754f88841cee5f39f21c80 *data/vgenes.rda
-94475179d813f05c9656313f0187caf1 *inst/NEWS.Rmd
-81eed5efccd9576d34723fe86737a8eb *inst/doc/NEWS.pdf
+c0e53f2eb96d2977b3c3c5332148746c *inst/NEWS.Rmd
+855c6c82e53c67f42cbd5db8056f25bf *inst/doc/NEWS.pdf
 be3c5b92088abde113a75d935b2b91de *inst/doc/vignette.R
 24e28047333868a5fcd9dea722d49470 *inst/doc/vignette.Rmd
 225e70927bac543bb66bccfc91dcb7be *inst/doc/vignette.html

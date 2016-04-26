@@ -12,6 +12,14 @@ output:
   word_document: default
 ---
 
+
+## Changes in version 1.3.4 (2016-04-21)
+
+### BUG FIXES
+
+     * clones(): eliminated errors
+
+
 ## Changes in version 1.3.3 (2016-04-15)
 
 ### BUG FIXES

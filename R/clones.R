@@ -82,6 +82,36 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
                                          if(dispSeqID==T){do.call(paste, c(as.list(aaseqtab.new$Sequence_ID), sep=", "))},
                                          if(length(summarytab.new)>0 && dispTotalSeq==T){do.call(paste, c(as.list(unique(summarytab.new$Sequence)), sep=", "))}))
               }
+            }else if(length(which(a.dist[,a]<=tr))==0 && length(grep(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep=""), aaseqtab.sub$CDR3_IMGT))>1){
+              temp<-c(temp,uniqueCDR3.sub[a])
+              
+              aaseqtab.new<-aaseqtab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),]
+              ntseqtab.new<-data.frame(ntseqtab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),])
+              summarytab.new<-summarytab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),]
+              
+              tempout<-rbind(tempout,c(do.call(paste, c(as.list(uniqueCDR3.sub[a]), sep=", ")), # shared CDR3 seq.
+                                       l, # CDR3 length
+                                       length(uniqueCDR3.sub[a]), # number_shared_CDR3
+                                       nrow(aaseqtab.new), # number all sequences, belonging to clone
+                                       do.call(paste, c(as.list(apply(data.frame(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")),1,function(x){length(grep(x,gsub("[*]","-",aaseqtab.new$CDR3_IMGT),perl=T))})), sep=", ")), # sequence count
+                                       V[i], # V_gene
+                                       do.call(paste, c(as.list(unique(aaseqtab.new$V_GENE_and_allele)), sep=", ")), # V_gene & allele
+                                       if(useJ==T && length(j)>0){do.call(paste, c(as.list(unique(j)), sep=", "))}else if(useJ==T && length(j)==0){"no J"}, # J_gene
+                                       do.call(paste, c(as.list(unique(aaseqtab.new$J_GENE_and_allele)), sep=", ")), # J_gene & allele
+                                       
+                                       if(dispD==T){do.call(paste, c(as.list(unique(aaseqtab.new$D_GENE_and_allele)), sep=", "))},
+                                       if(dispCDR3aa==T){do.call(paste, c(as.list(aaseqtab.new$CDR3_IMGT), sep=", "))},
+                                       if(length(ntseqtab.new)>0 && dispCDR3nt==T){do.call(paste, c(as.list(ntseqtab.new[,1]), sep=", "))},
+                                       if(dispFunctionality.list==T){do.call(paste, c(as.list(aaseqtab.new$Functionality), sep=", "))},
+                                       if(dispFunctionality.ratio==T){length(grep("^productive",aaseqtab.new$Functionality))/nrow(aaseqtab.new)},
+                                       if(dispFunctionality.ratio==T){length(grep("^unproductive",aaseqtab.new$Functionality))/nrow(aaseqtab.new)},
+                                       if(dispFunctionality.ratio==T){length(grep("prod",aaseqtab.new$Functionality,invert=T))/nrow(aaseqtab.new)},
+                                       if(length(summarytab.new)>0 && dispJunctionFr.list==T){do.call(paste, c(as.list(summarytab.new$JUNCTION_frame), sep=", "))},
+                                       if(length(summarytab.new)>0 && dispJunctionFr.ratio==T){length(which(summarytab.new$JUNCTION_frame=="in-frame"))/nrow(aaseqtab.new)},
+                                       if(length(summarytab.new)>0 && dispJunctionFr.ratio==T){length(which(summarytab.new$JUNCTION_frame=="out-of-frame"))/nrow(aaseqtab.new)},
+                                       if(length(summarytab.new)>0 && dispJunctionFr.ratio==T){length(grep("frame",summarytab.new$JUNCTION_frame,invert=T))/nrow(aaseqtab.new)},                             
+                                       if(dispSeqID==T){do.call(paste, c(as.list(aaseqtab.new$Sequence_ID), sep=", "))},
+                                       if(length(summarytab.new)>0 && dispTotalSeq==T){do.call(paste, c(as.list(unique(summarytab.new$Sequence)), sep=", "))}))
             }
           }
         }else{ ### several CDR3 length
@@ -124,6 +154,36 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
                                            if(dispSeqID==T){do.call(paste, c(as.list(aaseqtab.new$Sequence_ID), sep=", "))},
                                            if(length(summarytab.new)>0 && dispTotalSeq==T){do.call(paste, c(as.list(unique(summarytab.new$Sequence)), sep=", "))}))
                 }
+              }else if(length(which(a.dist[,a]<=tr))==0 && length(grep(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep=""), aaseqtab.sub$CDR3_IMGT))>1){
+                temp<-c(temp,uniqueCDR3.sub[a])
+                
+                aaseqtab.new<-aaseqtab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),]
+                ntseqtab.new<-data.frame(ntseqtab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),])
+                summarytab.new<-summarytab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),]
+                
+                tempout<-rbind(tempout,c(do.call(paste, c(as.list(uniqueCDR3.sub[a]), sep=", ")), # shared CDR3 seq.
+                                         l, # CDR3 length
+                                         length(uniqueCDR3.sub[a]), # number_shared_CDR3
+                                         nrow(aaseqtab.new), # number all sequences, belonging to clone
+                                         do.call(paste, c(as.list(apply(data.frame(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")),1,function(x){length(grep(x,gsub("[*]","-",aaseqtab.new$CDR3_IMGT),perl=T))})), sep=", ")), # sequence count
+                                         V[i], # V_gene
+                                         do.call(paste, c(as.list(unique(aaseqtab.new$V_GENE_and_allele)), sep=", ")), # V_gene & allele
+                                         if(useJ==T && length(j)>0){do.call(paste, c(as.list(unique(j)), sep=", "))}else if(useJ==T && length(j)==0){"no J"}, # J_gene
+                                         do.call(paste, c(as.list(unique(aaseqtab.new$J_GENE_and_allele)), sep=", ")), # J_gene & allele
+                                         
+                                         if(dispD==T){do.call(paste, c(as.list(unique(aaseqtab.new$D_GENE_and_allele)), sep=", "))},
+                                         if(dispCDR3aa==T){do.call(paste, c(as.list(aaseqtab.new$CDR3_IMGT), sep=", "))},
+                                         if(length(ntseqtab.new)>0 && dispCDR3nt==T){do.call(paste, c(as.list(ntseqtab.new[,1]), sep=", "))},
+                                         if(dispFunctionality.list==T){do.call(paste, c(as.list(aaseqtab.new$Functionality), sep=", "))},
+                                         if(dispFunctionality.ratio==T){length(grep("^productive",aaseqtab.new$Functionality))/nrow(aaseqtab.new)},
+                                         if(dispFunctionality.ratio==T){length(grep("^unproductive",aaseqtab.new$Functionality))/nrow(aaseqtab.new)},
+                                         if(dispFunctionality.ratio==T){length(grep("prod",aaseqtab.new$Functionality,invert=T))/nrow(aaseqtab.new)},
+                                         if(length(summarytab.new)>0 && dispJunctionFr.list==T){do.call(paste, c(as.list(summarytab.new$JUNCTION_frame), sep=", "))},
+                                         if(length(summarytab.new)>0 && dispJunctionFr.ratio==T){length(which(summarytab.new$JUNCTION_frame=="in-frame"))/nrow(aaseqtab.new)},
+                                         if(length(summarytab.new)>0 && dispJunctionFr.ratio==T){length(which(summarytab.new$JUNCTION_frame=="out-of-frame"))/nrow(aaseqtab.new)},
+                                         if(length(summarytab.new)>0 && dispJunctionFr.ratio==T){length(grep("frame",summarytab.new$JUNCTION_frame,invert=T))/nrow(aaseqtab.new)},                             
+                                         if(dispSeqID==T){do.call(paste, c(as.list(aaseqtab.new$Sequence_ID), sep=", "))},
+                                         if(length(summarytab.new)>0 && dispTotalSeq==T){do.call(paste, c(as.list(unique(summarytab.new$Sequence)), sep=", "))}))
               }
             }
           }
@@ -175,6 +235,36 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
                                        if(dispSeqID==T){do.call(paste, c(as.list(aaseqtab.new$Sequence_ID), sep=", "))},
                                        if(length(summarytab.new)>0 && dispTotalSeq==T){do.call(paste, c(as.list(unique(summarytab.new$Sequence)), sep=", "))}))
             }
+          }else if(length(which(a.dist[,a]<=tr))==0 && length(grep(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep=""), aaseqtab.sub$CDR3_IMGT))>1){
+            temp<-c(temp,uniqueCDR3.sub[a])
+            
+            aaseqtab.new<-aaseqtab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),]
+            ntseqtab.new<-data.frame(ntseqtab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),])
+            summarytab.new<-summarytab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),]
+            
+            tempout<-rbind(tempout,c(do.call(paste, c(as.list(uniqueCDR3.sub[a]), sep=", ")), # shared CDR3 seq.
+                                     l, # CDR3 length
+                                     length(uniqueCDR3.sub[a]), # number_shared_CDR3
+                                     nrow(aaseqtab.new), # number all sequences, belonging to clone
+                                     do.call(paste, c(as.list(apply(data.frame(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")),1,function(x){length(grep(x,gsub("[*]","-",aaseqtab.new$CDR3_IMGT),perl=T))})), sep=", ")), # sequence count
+                                     V[i], # V_gene
+                                     do.call(paste, c(as.list(unique(aaseqtab.new$V_GENE_and_allele)), sep=", ")), # V_gene & allele
+                                     if(useJ==T && length(j)>0){do.call(paste, c(as.list(unique(j)), sep=", "))}else if(useJ==T && length(j)==0){"no J"}, # J_gene
+                                     do.call(paste, c(as.list(unique(aaseqtab.new$J_GENE_and_allele)), sep=", ")), # J_gene & allele
+                                     
+                                     if(dispD==T){do.call(paste, c(as.list(unique(aaseqtab.new$D_GENE_and_allele)), sep=", "))},
+                                     if(dispCDR3aa==T){do.call(paste, c(as.list(aaseqtab.new$CDR3_IMGT), sep=", "))},
+                                     if(length(ntseqtab.new)>0 && dispCDR3nt==T){do.call(paste, c(as.list(ntseqtab.new[,1]), sep=", "))},
+                                     if(dispFunctionality.list==T){do.call(paste, c(as.list(aaseqtab.new$Functionality), sep=", "))},
+                                     if(dispFunctionality.ratio==T){length(grep("^productive",aaseqtab.new$Functionality))/nrow(aaseqtab.new)},
+                                     if(dispFunctionality.ratio==T){length(grep("^unproductive",aaseqtab.new$Functionality))/nrow(aaseqtab.new)},
+                                     if(dispFunctionality.ratio==T){length(grep("prod",aaseqtab.new$Functionality,invert=T))/nrow(aaseqtab.new)},
+                                     if(length(summarytab.new)>0 && dispJunctionFr.list==T){do.call(paste, c(as.list(summarytab.new$JUNCTION_frame), sep=", "))},
+                                     if(length(summarytab.new)>0 && dispJunctionFr.ratio==T){length(which(summarytab.new$JUNCTION_frame=="in-frame"))/nrow(aaseqtab.new)},
+                                     if(length(summarytab.new)>0 && dispJunctionFr.ratio==T){length(which(summarytab.new$JUNCTION_frame=="out-of-frame"))/nrow(aaseqtab.new)},
+                                     if(length(summarytab.new)>0 && dispJunctionFr.ratio==T){length(grep("frame",summarytab.new$JUNCTION_frame,invert=T))/nrow(aaseqtab.new)},                             
+                                     if(dispSeqID==T){do.call(paste, c(as.list(aaseqtab.new$Sequence_ID), sep=", "))},
+                                     if(length(summarytab.new)>0 && dispTotalSeq==T){do.call(paste, c(as.list(unique(summarytab.new$Sequence)), sep=", "))}))
           }
         }
       }else{ ### several CDR3 length
@@ -217,6 +307,36 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
                                          if(dispSeqID==T){do.call(paste, c(as.list(aaseqtab.new$Sequence_ID), sep=", "))},
                                          if(length(summarytab.new)>0 && dispTotalSeq==T){do.call(paste, c(as.list(unique(summarytab.new$Sequence)), sep=", "))}))
               }
+            }else if(length(which(a.dist[,a]<=tr))==0 && length(grep(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep=""), aaseqtab.sub$CDR3_IMGT))>1){
+              temp<-c(temp,uniqueCDR3.sub[a])
+              
+              aaseqtab.new<-aaseqtab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),]
+              ntseqtab.new<-data.frame(ntseqtab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),])
+              summarytab.new<-summarytab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),]
+              
+              tempout<-rbind(tempout,c(do.call(paste, c(as.list(uniqueCDR3.sub[a]), sep=", ")), # shared CDR3 seq.
+                                       l, # CDR3 length
+                                       length(uniqueCDR3.sub[a]), # number_shared_CDR3
+                                       nrow(aaseqtab.new), # number all sequences, belonging to clone
+                                       do.call(paste, c(as.list(apply(data.frame(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")),1,function(x){length(grep(x,gsub("[*]","-",aaseqtab.new$CDR3_IMGT),perl=T))})), sep=", ")), # sequence count
+                                       V[i], # V_gene
+                                       do.call(paste, c(as.list(unique(aaseqtab.new$V_GENE_and_allele)), sep=", ")), # V_gene & allele
+                                       if(useJ==T && length(j)>0){do.call(paste, c(as.list(unique(j)), sep=", "))}else if(useJ==T && length(j)==0){"no J"}, # J_gene
+                                       do.call(paste, c(as.list(unique(aaseqtab.new$J_GENE_and_allele)), sep=", ")), # J_gene & allele
+                                       
+                                       if(dispD==T){do.call(paste, c(as.list(unique(aaseqtab.new$D_GENE_and_allele)), sep=", "))},
+                                       if(dispCDR3aa==T){do.call(paste, c(as.list(aaseqtab.new$CDR3_IMGT), sep=", "))},
+                                       if(length(ntseqtab.new)>0 && dispCDR3nt==T){do.call(paste, c(as.list(ntseqtab.new[,1]), sep=", "))},
+                                       if(dispFunctionality.list==T){do.call(paste, c(as.list(aaseqtab.new$Functionality), sep=", "))},
+                                       if(dispFunctionality.ratio==T){length(grep("^productive",aaseqtab.new$Functionality))/nrow(aaseqtab.new)},
+                                       if(dispFunctionality.ratio==T){length(grep("^unproductive",aaseqtab.new$Functionality))/nrow(aaseqtab.new)},
+                                       if(dispFunctionality.ratio==T){length(grep("prod",aaseqtab.new$Functionality,invert=T))/nrow(aaseqtab.new)},
+                                       if(length(summarytab.new)>0 && dispJunctionFr.list==T){do.call(paste, c(as.list(summarytab.new$JUNCTION_frame), sep=", "))},
+                                       if(length(summarytab.new)>0 && dispJunctionFr.ratio==T){length(which(summarytab.new$JUNCTION_frame=="in-frame"))/nrow(aaseqtab.new)},
+                                       if(length(summarytab.new)>0 && dispJunctionFr.ratio==T){length(which(summarytab.new$JUNCTION_frame=="out-of-frame"))/nrow(aaseqtab.new)},
+                                       if(length(summarytab.new)>0 && dispJunctionFr.ratio==T){length(grep("frame",summarytab.new$JUNCTION_frame,invert=T))/nrow(aaseqtab.new)},                             
+                                       if(dispSeqID==T){do.call(paste, c(as.list(aaseqtab.new$Sequence_ID), sep=", "))},
+                                       if(length(summarytab.new)>0 && dispTotalSeq==T){do.call(paste, c(as.list(unique(summarytab.new$Sequence)), sep=", "))}))
             }
           }
         }
