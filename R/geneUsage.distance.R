@@ -23,8 +23,6 @@ geneUsage.distance<-function(geneUsage.tab=NULL, names=NULL, method=c("bc","jacc
       geneUsage.tab[i,which(temp[i,]>cutoff)]<-1
     }
     dist<-"jaccard"
-  }else{
-    stop("--> Method is missing or unknown")
   }
   
   if(method=="cosine"){

@@ -38,7 +38,7 @@ plotDistPCoA<-function(pcoa.tab=NULL, groups=NULL, names=NULL, axes=NULL, plotCo
       colors[which(groups[,2]==unique(groups[,2])[c])]<-temp[c]
     }
   }else{
-    stop("--> 'groups' has to be a data.frame containing sequences (1. column) and groups (2.column)")
+    stop("--> 'groups' has to be a data.frame containing groups in 2.column")
   }
   
   if(length(PDF)>0){

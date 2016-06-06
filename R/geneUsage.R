@@ -19,10 +19,10 @@ geneUsage<-function(genes=NULL,level=c("subgroup", "gene", "allele"),functionali
   out.list<-list()
   
   if(length(genes)>0){
-    if(length(grep(" ",(genes[1])))==0){
-      family<-substr(genes[1],1,4)
+    if(length(grep(" ",genes[which(genes!="")][1]))==0){
+      family<-substr(genes[which(genes!="")][1],1,4)
     }else{
-      family<-substr(strsplit(genes[1],split=" ")[[1]][2],1,4)
+      family<-substr(strsplit(genes[which(genes!="")][1],split=" ")[[1]][2],1,4)
     }
     genelist<-unlist(apply(data.frame(genes),1,function(x){strsplit(x,split=" |,|[.]|;|[|]|_|/")[[1]]}))
     genelist<-sort(genelist[grep(family,genelist)])

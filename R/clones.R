@@ -90,7 +90,7 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
               summarytab.new<-summarytab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),]
               
               tempout<-rbind(tempout,c(do.call(paste, c(as.list(uniqueCDR3.sub[a]), sep=", ")), # shared CDR3 seq.
-                                       l, # CDR3 length
+                                       uniqueCDR3length, # CDR3 length
                                        length(uniqueCDR3.sub[a]), # number_shared_CDR3
                                        nrow(aaseqtab.new), # number all sequences, belonging to clone
                                        do.call(paste, c(as.list(apply(data.frame(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")),1,function(x){length(grep(x,gsub("[*]","-",aaseqtab.new$CDR3_IMGT),perl=T))})), sep=", ")), # sequence count

@@ -262,29 +262,8 @@ pandoc.table(V.mutation$Junction_frame)
 ```
 
 
-
-#### Proportions of amino acid mutations
-Proportions of amino acid mutations can be calculated using `sequences.mutation.AA()`. This function calculates the porportion of mutations from amino acid x to amino acid y. The original amino acids are in rows, the mutated one in columns.
-
-`plotSequencesMutationAA()` visualizes the 20 x 20 data frame in some kind of heatmap, showing groups of proportions. Furthermore changes of amino acid characteristics, like hydropathy, volume or chemical can be shown (orange dots). Figures can be saved as PDF.
-
-```{r, echo=F}
-library(bcRep)
-library(pander)
-
-```{r, echo=T,results='asis', fig.align='center', fig.height=5, fig.width=9}
-# Example:
-
-data(mutationtab)
-V.AAmut<-sequences.mutation.AA(mutationtab = mutationtab, sequence = "V")
-plotSequencesMutationAA(mutationAAtab = V.AAmut, showChange = "hydropathy")
-
-```
-
-
-
-#### Proportions of bases nearby mutations
-Proportions of base distributions nearby mutationscan be calculated using `sequences.mutation.base()`. This function calculates the porportion of a, c, g or t next to mutations from position -3 to +3. Parallel processing can be used for large datasets.
+#### Proportions of nucleotides at and nearby mutation sites
+Proportions of nucleotide distributions at and nearby mutation sites can be calculated using `sequences.mutation.base()`. This function calculates the porportion of a, c, g or t at the mutated positions and/or next to mutations from position -3 to +3. Parallel processing can be used for large datasets.
 
 `plotSequencesMutationAA()` visualizes base proportions nearby mutations. Barplots are given for each base.
 
@@ -298,8 +277,30 @@ library(pander)
 
 data(mutationtab)
 data(summarytab)
-V.BaseMut<-sequences.mutation.base(mutationtab = mutationtab, summarytab = summarytab, sequence = "V", nrCores=1)
-plotSequencesMutationBase(mutationBaseTab = V.BaseMut)
+V.BaseMut<-sequences.mutation.base(mutationtab = mutationtab, summarytab = summarytab, 
+                                   analyseEnvironment = TRUE, analyseMutation = TRUE, 
+                                   sequence = "V", nrCores=1)
+plotSequencesMutationBase(mutationBaseTab = V.BaseMut, plotEnvironment = TRUE, 
+     plotMutation = TRUE, colHeatmap = c("white","darkblue"))
+
+```
+
+
+#### Proportions of amino acid changes
+Proportions of amino acid changes can be calculated using `sequences.mutation.AA()`. This function calculates the porportion of mutations from amino acid x to amino acid y. The original amino acids are in rows, the mutated one in columns.
+
+`plotSequencesMutationAA()` visualizes the 20 x 20 data frame in some kind of heatmap, showing groups of proportions. Furthermore changes of amino acid characteristics, like hydropathy, volume or chemical can be shown (orange dots). Figures can be saved as PDF.
+
+```{r, echo=F}
+library(bcRep)
+library(pander)
+
+```{r, echo=T,results='asis', fig.align='center', fig.height=5, fig.width=9}
+# Example:
+
+data(mutationtab)
+V.AAmut<-sequences.mutation.AA(mutationtab = mutationtab, sequence = "V")
+plotSequencesMutationAA(mutationAAtab = V.AAmut, showChange = "hydropathy")
 
 ```
 

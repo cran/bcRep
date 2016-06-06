@@ -12,6 +12,19 @@ output:
   word_document: default
 ---
 
+## Changes in version 1.3.5 (2016-06-03)
+
+### BUG FIXES
+
+     * geneUsage.distance(): eliminated errors
+     * geneUsage() & compare.geneUsage(): eliminated errors
+
+### NEW FEATURES AND FUNCTIONS
+
+     * sequences.mutation.base(): Added function to calculate proportions of silent mutations from nucleotide A to nucleotide B. Now, the nucleotide changes of the mutated position, but also the nucleotide distributions next to the mutated position (-3 to +3) can be analysed.
+     * plotSequencesMutationBase(): added function to plot results of sequences.mutation.base()
+
+
 
 ## Changes in version 1.3.4 (2016-04-21)
 

@@ -44,7 +44,7 @@ plotSequencesMutationAA(mutationAAtab = NULL,
 \references{
 IMGT/HighV-QUEST V-REGION mutation and AA change table: \url{http://www.imgt.org/IMGT_vquest/share/textes/imgtvquest.html#mut-table}
 
-IMGT Index "Mutation": \url{http://www.imgt.org/IMGTindex/mutation.html}
+IMGT Index "Mutation": \url{http://www.imgt.org/IMGTindex/mutation.php}
 }
 \author{
 Julia Bischof

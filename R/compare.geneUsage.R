@@ -30,7 +30,7 @@ compare.geneUsage<-function(gene.list=NULL,level=c("subgroup","gene","allele"),a
   
   genes.all<-unique(unlist(apply(data.frame(unique(unlist(gene.list))),1,function(x){strsplit(x,split=" |,|[.]|/|_|;")})))
   if(length(grep(" ", gene.list[[1]][which(gene.list[[1]]!="")[1]]))>0){
-    genes.all<-sort(genes.all[grep(substr(strsplit(gene.list[[1]][[1]][which(gene.list[[1]]!="")[1]],split=" ")[[1]][grep("[A-Z]",strsplit(gene.list[[1]][[1]][which(gene.list[[1]]!="")[1]],split=" ")[[1]])][2],1,4),genes.all)])
+    genes.all<-sort(genes.all[grep(substr(strsplit(gene.list[[1]][which(gene.list[[1]]!="")[1]],split=" ")[[1]][grep("[A-Z]",strsplit(gene.list[[1]][which(gene.list[[1]]!="")[1]],split=" ")[[1]])][2],1,4),genes.all)])
   }else{
     genes.all<-sort(genes.all)
   }

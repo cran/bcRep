@@ -143,12 +143,16 @@ library(bcRep)
 library(pander)
 
 
-## ---- echo=T,results='asis', fig.align='center', fig.height=5, fig.width=9----
+## ---- echo=T,results='asis', fig.align='center', fig.height=7, fig.width=9----
 # Example:
 
 data(mutationtab)
-V.AAmut<-sequences.mutation.AA(mutationtab = mutationtab, sequence = "V")
-plotSequencesMutationAA(mutationAAtab = V.AAmut, showChange = "hydropathy")
+data(summarytab)
+V.BaseMut<-sequences.mutation.base(mutationtab = mutationtab, summarytab = summarytab, 
+                                   analyseEnvironment = TRUE, analyseMutation = TRUE, 
+                                   sequence = "V", nrCores=1)
+plotSequencesMutationBase(mutationBaseTab = V.BaseMut, plotEnvironment = TRUE, 
+     plotMutation = TRUE, colHeatmap = c("white","darkblue"))
 
 
 ## ---- echo=F-------------------------------------------------------------
@@ -156,13 +160,12 @@ library(bcRep)
 library(pander)
 
 
-## ---- echo=T,results='asis', fig.align='center', fig.height=7, fig.width=9----
+## ---- echo=T,results='asis', fig.align='center', fig.height=5, fig.width=9----
 # Example:
 
 data(mutationtab)
-data(summarytab)
-V.BaseMut<-sequences.mutation.base(mutationtab = mutationtab, summarytab = summarytab, sequence = "V", nrCores=1)
-plotSequencesMutationBase(mutationBaseTab = V.BaseMut)
+V.AAmut<-sequences.mutation.AA(mutationtab = mutationtab, sequence = "V")
+plotSequencesMutationAA(mutationAAtab = V.AAmut, showChange = "hydropathy")
 
 
 ## ---- eval=FALSE---------------------------------------------------------

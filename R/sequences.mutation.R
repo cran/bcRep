@@ -1,8 +1,7 @@
 ## Julia Bischof
 ## 10-09-2015
 
-sequences.mutation<-function(mutationtab=NULL,summarytab=NULL,sequence=c("V", "FR1", "FR2", "FR3", "CDR1", "CDR2"),
-                             functionality=FALSE,junctionFr=FALSE, rsRatio=FALSE,...){
+sequences.mutation<-function(mutationtab=NULL,summarytab=NULL,sequence=c("V", "FR1", "FR2", "FR3", "CDR1", "CDR2"),      functionality=FALSE,junctionFr=FALSE, rsRatio=FALSE,...){
   if(length(mutationtab)==0){
     stop('--> 7_V-REGION-mutation-and-AA-change-table file is missing')
   }
