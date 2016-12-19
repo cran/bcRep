@@ -5,7 +5,7 @@
 Gene usage statistics
 }
 \description{
-This function gives information about the gene usage distribution. Results can returned as relative or absolute values and be visualized as a barplot, using \code{plotGeneUsage}. Further gene usage can be analyzed in relation to functionality or junction frame usage.
+This function gives information about the gene usage distribution (see detail!). Results can returned as relative or absolute values and be visualized as a barplot, using \code{plotGeneUsage}. Further gene usage can be analyzed in relation to functionality or junction frame usage.
 }
 \usage{
 geneUsage(genes = NULL, level = c("subgroup", "gene", "allele"), 
@@ -56,7 +56,7 @@ plotGeneUsage(geneUsage.tab=NULL,plotFunctionality=FALSE,plotJunctionFr=FALSE,
 }
 }
 \details{
-Vector of genes will be analyzed for one of the levels \code{subgroup} (e.g. IGHV1), \code{gene} (e.g. IGHV1-1) or \code{allele} (e.g. IGHV1-1*2).
+Vector of genes will be analyzed for one of the levels \code{subgroup} (e.g. IGHV1), \code{gene} (e.g. IGHV1-1) or \code{allele} (e.g. IGHV1-1*2). Proportions (\code{abundance = "relative"}) are always based on the number of all alleles found in list: the number of the subgroup/gene/allele is divided by the number of all alleles mentioned for all sequences (in the case there are more alleles/genes mentioned for one sequence).
 
 The \code{PDF} character string should be only the project name (without ".pdf"). For an analysis of the gene usage distribution, a plot called "PDF"_Gene-usage.pdf will be saved to the working direktory. 
 

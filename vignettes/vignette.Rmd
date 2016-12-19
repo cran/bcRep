@@ -328,6 +328,8 @@ Output of the clone table can be individually specified (see help), but followin
 
 Optionally columns like D gene, CDR3 amino acid sequences, CDR3 nucleotide sequences, functionality, junction frames and so on, can be specified.
 
+Further the function `clones.IDlist()` returns a table containing all sequence ID's provided in the IMGT tables and correpsonding clone ID's. This function only works, if sequence ID's were returned in clone table [`clones(..., dispSeqID = TRUE)`]. So you can get information about which sequence belongs to which clone or even which sequences were not matched to any of those clones.
+
 ```{r, eval=FALSE}
 # Example:
 data(aaseqtab)
@@ -343,6 +345,12 @@ clones.tab<-clones(aaseqtab = aaseqtab, summarytab = summarytab, ntseqtab = NULL
 # Example of a clonotype file (not from the command above)
 data(clones.ind)
 str(clones.ind, strict.width="cut", width=85)
+
+data(aaseqtab)
+data(summarytab)
+clones.tab<-clones(aaseqtab = aaseqtab, summarytab = summarytab, dispSeqID = T)
+clones.ID<-clones.IDlist(clones.seqID = clones.tab$Sequence_IDs, summarytab.seqID = summarytab$Sequence_ID)
+clones.ID[1:5,] # Example of output of clones.IDlist()
 ```
 
 ### Filter clones for their size

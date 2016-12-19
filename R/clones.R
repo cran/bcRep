@@ -211,6 +211,9 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
               ntseqtab.new<-data.frame(ntseqtab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[c(which(a.dist[a,]<=tr),a)]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),])
               summarytab.new<-summarytab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[c(which(a.dist[a,]<=tr),a)]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),]
               
+              Jgene.uni<-unlist(lapply(aaseqtab.new$J_GENE_and_allele,function(x){strsplit(x, split=" |[*]|,|S")[[1]]}))
+              Jgene.uni<-unique(Jgene.uni[grep("J",Jgene.uni)])
+              
               tempout<-rbind(tempout,c(do.call(paste, c(as.list(uniqueCDR3.sub[c(which(a.dist[a,]<=tr),a)]), sep=", ")), # shared CDR3 seq.
                                        uniqueCDR3length, # CDR3 length
                                        length(uniqueCDR3.sub[c(which(a.dist[a,]<=tr),a)]), # number_shared_CDR3
@@ -218,7 +221,7 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
                                        do.call(paste, c(as.list(apply(data.frame(paste("^",gsub("[*]","-",uniqueCDR3.sub[c(which(a.dist[a,]<=tr),a)]),"$",sep="")),1,function(x){length(grep(x,gsub("[*]","-",aaseqtab.new$CDR3_IMGT),perl=T))})), sep=", ")), # sequence count
                                        V[i], # V_gene
                                        do.call(paste, c(as.list(unique(aaseqtab.new$V_GENE_and_allele)), sep=", ")), # V_gene & allele
-                                       if(useJ==T && length(j)>0){do.call(paste, c(as.list(unique(j)), sep=", "))}else if(useJ==T && length(j)==0){"no J"}, # J_gene
+                                       if(length(Jgene.uni)>0){do.call(paste, c(as.list(Jgene.uni), sep=", "))}else{"No J"}, # J_gene
                                        do.call(paste, c(as.list(unique(aaseqtab.new$J_GENE_and_allele)), sep=", ")), # J_gene & allele
                                        
                                        if(dispD==T){do.call(paste, c(as.list(unique(aaseqtab.new$D_GENE_and_allele)), sep=", "))},
@@ -242,6 +245,9 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
             ntseqtab.new<-data.frame(ntseqtab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),])
             summarytab.new<-summarytab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),]
             
+            Jgene.uni<-unlist(lapply(aaseqtab.new$J_GENE_and_allele,function(x){strsplit(x, split=" |[*]|,|S")[[1]]}))
+            Jgene.uni<-unique(Jgene.uni[grep("J",Jgene.uni)])
+            
             tempout<-rbind(tempout,c(do.call(paste, c(as.list(uniqueCDR3.sub[a]), sep=", ")), # shared CDR3 seq.
                                      l, # CDR3 length
                                      length(uniqueCDR3.sub[a]), # number_shared_CDR3
@@ -249,7 +255,7 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
                                      do.call(paste, c(as.list(apply(data.frame(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")),1,function(x){length(grep(x,gsub("[*]","-",aaseqtab.new$CDR3_IMGT),perl=T))})), sep=", ")), # sequence count
                                      V[i], # V_gene
                                      do.call(paste, c(as.list(unique(aaseqtab.new$V_GENE_and_allele)), sep=", ")), # V_gene & allele
-                                     if(useJ==T && length(j)>0){do.call(paste, c(as.list(unique(j)), sep=", "))}else if(useJ==T && length(j)==0){"no J"}, # J_gene
+                                     if(length(Jgene.uni)>0){do.call(paste, c(as.list(Jgene.uni), sep=", "))}else{"No J"}, # J_gene
                                      do.call(paste, c(as.list(unique(aaseqtab.new$J_GENE_and_allele)), sep=", ")), # J_gene & allele
                                      
                                      if(dispD==T){do.call(paste, c(as.list(unique(aaseqtab.new$D_GENE_and_allele)), sep=", "))},
@@ -283,6 +289,9 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
                 ntseqtab.new<-data.frame(ntseqtab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[c(which(a.dist[a,]<=tr),a)]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),])
                 summarytab.new<-summarytab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[c(which(a.dist[a,]<=tr),a)]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),]
                 
+                Jgene.uni<-unlist(lapply(aaseqtab.new$J_GENE_and_allele,function(x){strsplit(x, split=" |[*]|,|S")[[1]]}))
+                Jgene.uni<-unique(Jgene.uni[grep("J",Jgene.uni)])
+                
                 tempout<-rbind(tempout,c(do.call(paste, c(as.list(uniqueCDR3.sub[c(which(a.dist[a,]<=tr),a)]), sep=", ")), # shared CDR3 seq.
                                          l, # CDR3 length
                                          length(uniqueCDR3.sub[c(which(a.dist[a,]<=tr),a)]), # number_shared_CDR3
@@ -290,7 +299,7 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
                                          do.call(paste, c(as.list(apply(data.frame(paste("^",gsub("[*]","-",uniqueCDR3.sub[c(which(a.dist[a,]<=tr),a)]),"$",sep="")),1,function(x){length(grep(x,gsub("[*]","-",aaseqtab.new$CDR3_IMGT),perl=T))})), sep=", ")), # sequence count
                                          V[i], # V_gene
                                          do.call(paste, c(as.list(unique(aaseqtab.new$V_GENE_and_allele)), sep=", ")), # V_gene & allele
-                                         if(useJ==T && length(j)>0){do.call(paste, c(as.list(unique(j)), sep=", "))}else if(useJ==T && length(j)==0){"no J"}, # J_gene
+                                         if(length(Jgene.uni)>0){do.call(paste, c(as.list(Jgene.uni), sep=", "))}else{"No J"}, # J_gene
                                          do.call(paste, c(as.list(unique(aaseqtab.new$J_GENE_and_allele)), sep=", ")), # J_gene & allele
                                          
                                          if(dispD==T){do.call(paste, c(as.list(unique(aaseqtab.new$D_GENE_and_allele)), sep=", "))},
@@ -314,6 +323,9 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
               ntseqtab.new<-data.frame(ntseqtab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),])
               summarytab.new<-summarytab.sub[grep(do.call(paste, c(as.list(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")), sep="|")),gsub("[*]","-",aaseqtab.sub$CDR3_IMGT),perl=T),]
               
+              Jgene.uni<-unlist(lapply(aaseqtab.new$J_GENE_and_allele,function(x){strsplit(x, split=" |[*]|,|S")[[1]]}))
+              Jgene.uni<-unique(Jgene.uni[grep("J",Jgene.uni)])
+              
               tempout<-rbind(tempout,c(do.call(paste, c(as.list(uniqueCDR3.sub[a]), sep=", ")), # shared CDR3 seq.
                                        l, # CDR3 length
                                        length(uniqueCDR3.sub[a]), # number_shared_CDR3
@@ -321,7 +333,7 @@ clones<-function(aaseqtab=NULL,summarytab=NULL, ntseqtab=NULL,identity=0.85, use
                                        do.call(paste, c(as.list(apply(data.frame(paste("^",gsub("[*]","-",uniqueCDR3.sub[a]),"$",sep="")),1,function(x){length(grep(x,gsub("[*]","-",aaseqtab.new$CDR3_IMGT),perl=T))})), sep=", ")), # sequence count
                                        V[i], # V_gene
                                        do.call(paste, c(as.list(unique(aaseqtab.new$V_GENE_and_allele)), sep=", ")), # V_gene & allele
-                                       if(useJ==T && length(j)>0){do.call(paste, c(as.list(unique(j)), sep=", "))}else if(useJ==T && length(j)==0){"no J"}, # J_gene
+                                       if(length(Jgene.uni)>0){do.call(paste, c(as.list(Jgene.uni), sep=", "))}else{"No J"}, # J_gene
                                        do.call(paste, c(as.list(unique(aaseqtab.new$J_GENE_and_allele)), sep=", ")), # J_gene & allele
                                        
                                        if(dispD==T){do.call(paste, c(as.list(unique(aaseqtab.new$D_GENE_and_allele)), sep=", "))},

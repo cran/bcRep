@@ -24,6 +24,7 @@ geneUsage<-function(genes=NULL,level=c("subgroup", "gene", "allele"),functionali
     }else{
       family<-substr(strsplit(genes[which(genes!="")][1],split=" ")[[1]][2],1,4)
     }
+    
     genelist<-unlist(apply(data.frame(genes),1,function(x){strsplit(x,split=" |,|[.]|;|[|]|_|/")[[1]]}))
     genelist<-sort(genelist[grep(family,genelist)])
     if(level=="subgroup"){
@@ -42,9 +43,10 @@ geneUsage<-function(genes=NULL,level=c("subgroup", "gene", "allele"),functionali
     colnames(tab.bar)<-unique(genelist)
     if(length(functionality)==0 && length(junctionFr)==0){
       out.list<-tab.bar
+    }else{
+      out.list<-c(out.list,list(data.frame(tab.bar,row.names=NULL, check.names=F)))
+      names(out.list)<-c(names(out.list)[which(names(out.list)!="")],"gene_usage")
     }
-    out.list<-c(out.list,list(data.frame(tab.bar,row.names=NULL, check.names=F)))
-    names(out.list)<-c(names(out.list)[which(names(out.list)!="")],"gene_usage")
     
     # gene usage vs. functionality
     if(length(functionality)>0){

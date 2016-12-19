@@ -185,6 +185,12 @@ plotSequencesMutationAA(mutationAAtab = V.AAmut, showChange = "hydropathy")
 data(clones.ind)
 str(clones.ind, strict.width="cut", width=85)
 
+data(aaseqtab)
+data(summarytab)
+clones.tab<-clones(aaseqtab = aaseqtab, summarytab = summarytab, dispSeqID = T)
+clones.ID<-clones.IDlist(clones.seqID = clones.tab$Sequence_IDs, summarytab.seqID = summarytab$Sequence_ID)
+clones.ID[1:5,] # Example of output of clones.IDlist()
+
 ## ---- echo=FALSE---------------------------------------------------------
 library(bcRep)
 library(pander)

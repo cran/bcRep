@@ -46,9 +46,9 @@ Levandowsky, Michael; Winter, David (1971), "Distance between sets", Nature 234 
 
 Graham L. Giller (2012). "The Statistical Properties of Random Bitstreams and the Sampling Distribution of Cosine Similarity". Giller Investments Research Notes (20121024/1)
 
-Jari Oksanen, F. Guillaume Blanchet, et al. (2015). vegan: Community Ecology Package. R package version 2.3-1. \url{http://CRAN.R-project.org/package=vegan}
+Jari Oksanen, F. Guillaume Blanchet, et al. (2015). vegan: Community Ecology Package. R package version 2.3-1. \url{https://CRAN.R-project.org/package=vegan}
   
-David Meyer and Christian Buchta (2015). proxy: Distance and Similarity Measures. R package version 0.4-15. \url{http://CRAN.R-project.org/package=proxy}
+David Meyer and Christian Buchta (2015). proxy: Distance and Similarity Measures. R package version 0.4-15. \url{https://CRAN.R-project.org/package=proxy}
 }
 \author{
 Julia Bischof

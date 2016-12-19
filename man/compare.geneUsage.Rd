@@ -5,7 +5,7 @@
 Compare gene usage of different samples
 }
 \description{
-This function compares the gene usage of different samples. Analysis can be done for subgroups, genes and alleles (see Details). Values can be returned as relative or absolute abundance. Parallel processing is possible.
+This function compares the gene usage of different samples (see details!). Analysis can be done for subgroups, genes and alleles (see Details). Values can be returned as relative or absolute abundance. Parallel processing is possible.
 }
 \usage{
 compare.geneUsage(gene.list = NULL, level = c("subgroup", "gene", "allele"), 
@@ -45,7 +45,7 @@ plotCompareGeneUsage(comp.tab = NULL, color = c("gray97", "darkblue"),
 }
 }
 \details{
-Gene usage analysis will be done for each sample. Vector of genes will be analyzed for one of the levels \code{subgroup} (e.g. IGHV1), \code{gene} (e.g. IGHV1-1) or \code{allele} (e.g. IGHV1-1*2).
+Gene usage analysis will be done for each sample. Vector of genes will be analyzed for one of the levels \code{subgroup} (e.g. IGHV1), \code{gene} (e.g. IGHV1-1) or \code{allele} (e.g. IGHV1-1*2). Proportions (\code{abundance = "relative"}) are always based on the number of all alleles found in list: the number of the subgroup/gene/allele is divided by the number of all alleles mentioned for all sequences (in the case there are more alleles/genes mentioned for one sequence).
 
 
 The \code{PDF} character string should be only the project name (without ".pdf"). 

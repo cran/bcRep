@@ -34,7 +34,7 @@ This function calculates dissmiliarity/distance indices based on sequences. Leve
 Output is a distance matrix containing dissimilarity indices/distances between sequences.
 }
 \references{
-van der Loo M (2014). The stringdist package for approximate string matching. The R Journal, 6, pp. 111-122. \url{http://CRAN.R-project.org/package=stringdist}
+van der Loo M (2014). The stringdist package for approximate string matching. The R Journal, 6, pp. 111-122. \url{https://CRAN.R-project.org/package=stringdist}
 }
 \author{
 Julia Bischof

@@ -69,6 +69,9 @@ A treshold for CDR3 identity has to be between 0 and 1. A cutoff of 0.85 means C
 
 \code{useJ=T} includes also the criteria of same J genes for clone defintion.
 
+Important to know:
+- if \code{useJ=T}, sequences having no J information are ignored
+
 }
 \value{
 Output of clones() is a data frame containing
